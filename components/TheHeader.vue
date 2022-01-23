@@ -82,7 +82,7 @@ export default {
 
 
 
-<style lang="scss">
+<style lang="scss">;
 
 header{
     position: fixed;
