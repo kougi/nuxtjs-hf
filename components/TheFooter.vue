@@ -25,16 +25,12 @@ export default {
 
 
 
-<style lang="scss">;
+<style>
 footer{
     padding: 2em 0;
-    nav{
-        ul{
-            display: flex;
+}
+footer nav ul{
+    display: flex;
             justify-content: space-around;
-            li{                
-            }
-        }
-    }
 }
 </style>
