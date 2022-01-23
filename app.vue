@@ -17,10 +17,6 @@
 
 <script>
 
-// Define a custom layout
-// definePageMeta({
-//   layout: "defaultLayout",
-// });
 
 //import { defineComponent } from '@vue/composition-api';
 
