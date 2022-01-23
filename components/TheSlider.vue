@@ -14,7 +14,7 @@
     <swiper-slide v-for="slide in slides" :key="slide.id">
         <figure>
             <img  
-            :src="require(`~/assets/img/${slide.image}`)"
+            :src="slide.image"
             :alt="slide.name"
             >
             <figcaption>
