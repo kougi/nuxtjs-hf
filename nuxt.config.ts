@@ -1,30 +1,5 @@
 import { defineNuxtConfig } from 'nuxt3'
 
-// https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
-// export default defineNuxtConfig({
-
-//     css: [
-//         '~assets/css/styles.css'
-//       ],
-    
-    
-//     buildModules: [
-//     '@nuxtjs/style-resources',
-//   ],
-//   env: {},
-    
-//   vite: {
-
-//   },
-  
-//   styleResources: {
-//     scss: [
-//       '~assets/scss/mixins.scss',
-//       '~assets/scss/variables.scss'
-//     ]
-//   },
-// })
-
 
 export default defineNuxtConfig({
     target: 'static', // default is 'server'
