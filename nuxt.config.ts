@@ -1,7 +1,7 @@
 import { defineNuxtConfig } from 'nuxt3'
 
 export default defineNuxtConfig({
-    target: 'server', // default is 'server'
+    target: 'static', // default is 'server'
     //  ssr: false,
     //buildDir: 'nuxt-build',
     meta: {
