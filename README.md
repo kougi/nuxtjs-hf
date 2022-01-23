@@ -1,4 +1,4 @@
-# Nuxt.js Example
+# Hambly Freeman Challenge - Nuxt.js3
 
 Deploy your [Nuxt.js](https://nuxtjs.org) project to Vercel with zero configuration.
 
