@@ -142,7 +142,7 @@ scrollToHash(window.location.hash);
           start: 'top 100%-=40', // which means "when the top of the trigger hits 40px above the bottom of the viewport
         // end: 'bottom 50%',
           toggleActions: "play none none reset",
-          markers: true,
+          markers: false,
         },
     });
 
