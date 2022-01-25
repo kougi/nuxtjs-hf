@@ -273,8 +273,8 @@
         }
         &.no-info{
             .row{
-                >div:last-child, &:last-child{
-                    border-bottom:unset;
+                >div.col-md-6, &:last-child{
+                    // border-bottom:unset;
                 }
                 &:last-child:before {
                     background: var(--font-color);
@@ -282,7 +282,7 @@
                     position: absolute;
                     left: 0;
                     right: 0;
-                    bottom: 1px;
+                    bottom: -1px;
                     height: 1px;
                 }
             }
@@ -342,9 +342,9 @@
 /* Small only */
 @media (max-width: $mobile-breakpoint) {
 
-:root{
-    --swiper-navigation-size: 20px;
-}
+    :root{
+        --swiper-navigation-size: 20px;
+    }
     #cursor-swiper{
         display: none;
     }
@@ -353,24 +353,35 @@
         font-size:0.4em;
     }
 
-    .carousel figcaption.no-info .row:last-child:before {
-        bottom: -1px;
-    }
+ 
+
     .open{
         margin-top: 10px;
     }
-    
-}
 
-/* Small only */
-@media (max-width: $mobile-breakpoint) {
     .carousel{
         margin-top:5em;
         details[open] {
             padding-bottom: 30px;
         }
+
+        figcaption.no-info {
+            .row{
+                >div:last-child,&:last-child{
+                    border-bottom:unset;
+                }
+                // &:last-child:before {
+                //     bottom: -1px;
+                // }
+            }
+           
+        }
     }
+
+    
 }
+
+
 // Large screens (desktop, tablet landscape)
 @media (min-width: $large-breakpoint) {
     // For desktop, make the Next/Previous swiper buttons take up 100% height and 50% width of either side.
@@ -412,8 +423,16 @@
                 }
             }
         }
+        &.no-info {
+            .row{
+                >div.col-md-6, &:last-child{
+                    border-bottom:unset;
+                }
+            }
+           
         }
     }
+}
 }
 
 // custom cursor

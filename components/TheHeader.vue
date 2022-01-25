@@ -286,7 +286,8 @@ aside.company-details{
         justify-content: space-around;
         gap: 1em;
         padding: 0 1em;
-        padding-right: 4em;
+        // padding-right: 7em;
+        padding-right: 110px;
     
     }
     .logo-container{
