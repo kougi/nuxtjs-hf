@@ -223,7 +223,7 @@ ul{
 
     // Typography for mobile
     // Hero text / Form inputs
-	.hero h1, form input{
+	.hero h1, form input, form h3{
 		Line-height: 69px;
 		Letter-spacing: -0.05em;
 	}
@@ -253,7 +253,7 @@ ul{
 		
 	}
 	// Introduction / Annotations / Submit button
-	.hero p, .carousel figcaption, input[type="submit"] {
+	.hero p, .carousel figcaption, input[type="submit"], form h3 {
 		Line-height: 45px;
 		Letter-spacing: 0em;
 	}

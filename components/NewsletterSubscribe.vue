@@ -73,7 +73,7 @@ h2#subscribe{
 
 section.newsletter{
     margin-top: 10em;
-    padding-bottom: 10em;
+    padding-bottom: 3.5em;
     h3{
         margin:0;
     }
@@ -93,7 +93,7 @@ section.newsletter{
             margin: -23px 0 0 0;
             // height:162px;
             max-width: 100%;
-            text-indent: -3px;
+            // text-indent: -3px;
 
             &:focus{
                 outline: none;
@@ -123,6 +123,7 @@ input[type=submit]{
     border: none;
     padding: 0;
     margin-top:1em;
+    display:block;
 
     &:hover{
         opacity:1;
@@ -138,14 +139,25 @@ input[type=submit]{
 
 
 /* Small only */
-@media (max-width: 39.9375em) {
+@media (max-width: $mobile-breakpoint) {
     section.newsletter{
         padding-bottom:5em;
+
         margin-top: 5em;
+
+        h3 {
+            margin: 0 0 0.2em 0;
+        }
+
+        form input:not([type=submit]),h3{
+            // text-indent: -5px;
+            margin-left: -5px;
+        }
     }
+    
 }
 /* Medium and up */
-@media (min-width: 40em) {
+@media (min-width: $mobile-breakpoint) {
     section.newsletter{
         h3{
             height:168px;
@@ -159,7 +171,8 @@ input[type=submit]{
 
         }
         form input:not([type=submit]),h3{
-            text-indent: -5px;
+            // text-indent: -5px;
+            margin-left: -12px;
         }
     }
 
