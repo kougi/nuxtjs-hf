@@ -45,9 +45,7 @@ export default {
       var viewport = document.querySelector('#viewport');
       var viewHeight = (viewport.clientHeight  - headerHeightOffset);
       // Create an event listener for browser resize
-      // document.getElementById("viewport").addEventListener("resize", this.myEventHandler);
-      // document.getElementById("content").addEventListener("resize", this.myEventHandler);
-      window.addEventListener("resize", this.myEventHandler);
+      // window.addEventListener("resize", this.resizeEvent);
   
   //Is the user on mobile?
   const isMobile = ('ontouchstart' in document.documentElement && navigator.userAgent.match(/Mobi/));
