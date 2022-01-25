@@ -5,8 +5,9 @@
         <div class="col-xs-3 col-md-3 col-lg-6">
             <div class="logo-container">
                 <a href="#">
-                    <!-- <img src="~/assets/img/txo_logo.svg" class="logo" alt="TXO"> -->
-                    <img src="https://jbeach.xyz/hf-challenge/assets/img/txo_logo.svg" class="logo" alt="TXO">
+                    <img src="~/assets/img/txo_logo.svg" class="logo" alt="TXO">
+                    <!-- <img src="https://jbeach.xyz/hf-challenge/assets/img/txo_logo.svg" class="logo" alt="TXO"> -->
+                    
                 </a>
             </div>
         </div>
