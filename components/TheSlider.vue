@@ -1,3 +1,4 @@
+<!-- Carousel using Swiperjs -->
 <template>
 <div class="carousel">
   <swiper
@@ -17,7 +18,9 @@
             :src="slide.image"
             :alt="slide.name"
             >
-            <figcaption>
+            <figcaption
+            :class="[slide.moreInfo ? 'info' : 'no-info']"
+            >
                 <div class="row">
                     <div class="col-xs-12 col-md-6">
                         Name: {{slide.name}}
@@ -26,29 +29,34 @@
                         Availability: [{{slide.availability}}]
                     </div>
                 </div>
-                <details>
-                    <summary>
-                        <div class="button open">Read More</div> 
-                        <div class="button close">Hide Text</div> 
-                    </summary>
+                <!-- Only load the additional information if it's enabled in the data/backend -->
+                <template v-if="slide.moreInfo === 1">
+                    <details>
+                        <summary>
+                            <div class="button open">Read More</div> 
+                            <div class="button close">Hide Text</div>
+                            <!-- <button @click="toggle">{{buttonToggle ? 'Read More' : 'Hide Text'}}</button> -->
+                        </summary>
 
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6">
-                            Location: [{{slide.location}}]
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                Location: [{{slide.location}}]
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                Size: [{{slide.size}}] sqft
+                            </div>
                         </div>
-                        <div class="col-xs-12 col-md-6">
-                            Size: [{{slide.size}}] sqft
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6 col-md-offset-6">
-                            <p>
-                                {{slide.description}}
-                            </p>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6 col-md-offset-6">
+                                <p>
+                                    {{slide.description}}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                </details>
+                    </details>
+                </template>
+
             </figcaption>
         </figure>
     </swiper-slide>
@@ -72,6 +80,7 @@
 
     data () {
         return {
+            buttonToggle: false,
             //Breakpoints for Swiper
             swiperOptions: {
                 breakpoints: {        
@@ -86,17 +95,30 @@
                 } 
             },
 
-            //Array of slides for the slideshow
+            //Array of slides for the slideshow, "more info" section can be disabled by setting moreInfo
+
+            //Currently using absolute addresses for images. usual path: assets/img/carousel-images/x.jpg
+            //https://jbeach.xyz/hf-challenge/assets/img/carousel-images/
             slides: [
-                { id: 1, image: "assets/img/carousel-images/c1.jpg", name: "Sample Title", availability: "Now", location: "Soho", size: "4,200", description: "This is a description" },
-                { id: 2, image: "assets/img/carousel-images/c2.jpeg", name: "Lorem Ipsum", availability: "Soon", location: "Eastend", size: "4,700", description: "This is a description" },
-                { id: 3, image: "assets/img/carousel-images/c3.jpeg", name: "Etcetera", availability: "TBA", location: "Southend", size: "3,200", description: "This is a description" },
-                { id: 4, image: "assets/img/carousel-images/c4.jpeg", name: "Office", availability: "Later", location: "Camden", size: "7,400", description: "This is a description. <br> Testing" },
-                { id: 5, image: "assets/img/carousel-images/c5.jpeg", name: "Another office", availability: "Postponed", location: "Notting Hil", size: "6,100", description: "This is a description. <br> Testing" },
+                { id: 1, image: "https://jbeach.xyz/hf-challenge/assets/img/carousel-images/c1.jpg", moreInfo: 1, name: "Sample Title", availability: "Now", location: "Soho", size: "4,200", description: "This is a description" },
+                { id: 2, image: "https://jbeach.xyz/hf-challenge/assets/img/carousel-images/c2.jpeg", moreInfo: 1, name: "Lorem Ipsum", availability: "Soon", location: "Eastend", size: "4,700", description: "This is a description" },
+                { id: 3, image: "https://jbeach.xyz/hf-challenge/assets/img/carousel-images/c3.jpeg", moreInfo: 1, name: "Etcetera", availability: "TBA", location: "Southend", size: "3,200", description: "This is a description" },
+                { id: 4, image: "https://jbeach.xyz/hf-challenge/assets/img/carousel-images/c4.jpeg", moreInfo: 1, name: "Office", availability: "Later", location: "Camden", size: "7,400", description: "This is a description. <br> Testing" },
+                { id: 5, image: "https://jbeach.xyz/hf-challenge/assets/img/carousel-images/c5.jpeg", moreInfo: 0, name: "Another office", availability: "Postponed", location: "Notting Hil", size: "6,100", description: "This is a description. <br> Testing" },
   
             ],
         }
     },
+
+
+    methods: { 
+         //Show/hide toggle for buttons below carousel.
+        // toggle() {
+        //     this.buttonToggle = !this.enable;
+        //     console.log('test')
+        //     },
+    },
+
 
 
     components: {
@@ -105,10 +127,12 @@
     },
     setup() {
       const onSwiper = (swiper) => {
-        console.log(swiper);
+        // console.log(swiper);
       };
+
       const onSlideChange = () => {
         console.log('slide change');
+        //When the slide is changed, check if the <details> panel is open on the slideshow and close it if it is.
         document.body.querySelectorAll('details').forEach((e) => (e.hasAttribute('open')) ? e.removeAttribute('open') : e.setAttribute('close',false))
       };
       return {
@@ -175,7 +199,7 @@
         var swiperHeight = document.querySelector(".swiper figure>img").offsetHeight;
         prevButton.style.height = `${swiperHeight}px`;
         nextButton.style.height = `${swiperHeight}px`;
-        console.log(swiperHeight);
+        // console.log(swiperHeight);
 
         //Change the cursor to "Next" (Will try replace .svg with plain text)
         nextButton.addEventListener("mouseenter", function( event ) {
@@ -199,7 +223,11 @@
 
 
     },
+
+   
+
   };
+
 </script>
 
 
@@ -232,7 +260,32 @@
             >div:not(.col-md-offset-6), &:last-child{
                 border-bottom:solid 1px var(--font-color);
             }
+            // &:last-child:before {
+            //     background: #736457;
+            //     content: '';
+            //     position: absolute;
+            //     left: 0;
+            //     right: 0;
+            //     bottom: 1px;
+            //     height: 1px;
+            // }
            
+        }
+        &.no-info{
+            .row{
+                >div:last-child, &:last-child{
+                    border-bottom:unset;
+                }
+                &:last-child:before {
+                    background: var(--font-color);
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    bottom: 1px;
+                    height: 1px;
+                }
+            }
         }
     }
     //Toggle visibility of info on the carousel when opened.
@@ -258,9 +311,10 @@
     //When details is opened
     &[open]{
         display:block;
-        padding-bottom:1.5em;
+        // padding-bottom:1.5em;
         padding-top:0;
         animation: open .2s linear;
+        padding-bottom: 60px;
         summary{
             position:absolute;
             bottom: 0;
@@ -298,8 +352,25 @@
         top: 2em;
         font-size:0.4em;
     }
+
+    .carousel figcaption.no-info .row:last-child:before {
+        bottom: -1px;
+    }
+    .open{
+        margin-top: 10px;
+    }
+    
 }
 
+/* Small only */
+@media (max-width: $mobile-breakpoint) {
+    .carousel{
+        margin-top:5em;
+        details[open] {
+            padding-bottom: 30px;
+        }
+    }
+}
 // Large screens (desktop, tablet landscape)
 @media (min-width: $large-breakpoint) {
     // For desktop, make the Next/Previous swiper buttons take up 100% height and 50% width of either side.

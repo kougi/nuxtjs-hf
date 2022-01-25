@@ -5,7 +5,7 @@
     --background-color: #f9f5ef;
     --header-height: 60px;
 
-    --site-padding: 20px;
+    --site-padding: 15px;
 
     --fs-hero-text: 72px;
     --fs-annotation-text: 18px;
@@ -83,10 +83,12 @@
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     // background: #555;
-    background: #528095;
+    background: #5f4939;
   }
   ::-webkit-scrollbar-thumb:active{
-    background: #f9c985;
+    background: #ac8262;
+    // border-left:solid 2px #4a321f;;
+    // box-shadow: 0px 0px 6px 2px blue;
   }
   
   

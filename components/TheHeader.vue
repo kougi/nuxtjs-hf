@@ -1,11 +1,12 @@
-<!-- Please remove this file from your project -->
+<!-- Page Header -->
 <template>
 <header>
     <div class="row">
         <div class="col-xs-3 col-md-3 col-lg-6">
             <div class="logo-container">
                 <a href="#">
-                    <img src="~/assets/img/txo_logo.svg" class="logo" alt="TXO">
+                    <!-- <img src="~/assets/img/txo_logo.svg" class="logo" alt="TXO"> -->
+                    <img src="https://jbeach.xyz/hf-challenge/assets/img/txo_logo.svg" class="logo" alt="TXO">
                 </a>
             </div>
         </div>
@@ -28,12 +29,16 @@
                     <h4>Enquiries</h4>
                     <div>
                         <!-- <br>s are used as the links are display: inline-bock to achieve the animated underline effect -->
-                        <h5>General</h5><br>
-                        <a href="tel:+44002036134733">+44 (0) 020 3613 4733</a><br>
-                        <a href="mailto:info@txowork.com">Info@txowork.com</a><br><br>
-                        <h5>Sales</h5><br>
-                        <a href="tel:+44002036134733">+44 (0) 020 3613 4733</a><br>
-                        <a href="mailto:info@txowork.com">Info@txowork.com</a><br>
+                        <div class="col">
+                            <h5>General</h5>
+                            <a href="tel:+44002036134733">+44 (0) 020 3613 4733</a>
+                            <a href="mailto:info@txowork.com">Info@txowork.com</a>
+                        </div>
+                        <div class="col">
+                        <h5>Sales</h5>
+                        <a href="tel:+44002036134733">+44 (0) 020 3613 4733</a>
+                        <a href="mailto:info@txowork.com">Info@txowork.com</a>
+                        </div>
                     </div>
                 </div>
                 <address>
@@ -134,8 +139,12 @@ aside.company-details{
 .logo-container{
     padding:10px;
     position: absolute;
-    top: 0;
+    top: 5px;
     transform-origin: left;
+
+    // To prevent logo jankiness on initial load
+    transform: scale(3) translatey(100vh);
+
     img{
         max-width: 80px;
     }
@@ -145,9 +154,12 @@ aside.company-details{
 
 // Hamburger icon
 .hamburger{
+    right: 0;
+    padding: 10px 10px;
     position: absolute;
-    top:10px;
-    right: 10px;
+    //Center vertically in header
+    top: 50%;
+    transform: translateY(-50%);
     >span{
         width: 30px;
         height: 2px;
@@ -170,9 +182,8 @@ aside.company-details{
         width: 100%;
         height: 100%;
         position: absolute;
-        top: -7px;
-        left: -5px;
-        background:red;
+        top: 0;
+        left: 0;
         transform-origin: center;
         cursor: pointer;
         
@@ -205,11 +216,21 @@ aside.company-details{
     aside.company-details{
         // padding-right: 0;
         // visibility: hidden;
+        h4{
+            font-size:1.2em;
+        }
+        h5,a, address p{
+            Font-size: var(--fs-annotation-text);
+            Line-height: 19px;
+            Letter-spacing: 0em;
+        }
 
     }
+    .contact{br{display:none;}}
     // Container for contact information on mobile
     .contact-container {
     /* display: block; */
+    
     flex-direction: column;
     width: 100vw;
     left: 0;
@@ -218,32 +239,41 @@ aside.company-details{
     position: absolute;
     background: var(--background-color);
     height: calc(100vh - var(--header-height));
+    padding-top: 3em;
 
-    // Add lines
-    >*{
-        border-top: solid 1px var(--font-color);
-        padding: 1em 0px;
+    
 
-        &:last-child{
-            border-bottom: solid 1px var(--font-color);
+        // Add lines to divide contact sections on mobile
+        >*{
+            border-top: solid 1px var(--font-color);
+                padding: 2em 0px;
+
+            &:last-child{
+                border-bottom: solid 1px var(--font-color);
+            }
+        }
+    }
+
+    .contact {
+        .col:nth-child(1){
+            padding-bottom: 1em;
         }
     }
 }
-}
 
 
 
-//(orientation: landscape)
 /* Medium and up */
 @media (min-width: $medium-breakpoint) {
 
     .hamburger{
         display: none;
+        
     }
     aside.company-details{
         // padding-right: 110px;
 
-        a,h5{
+        a{
             display: inline-block;
         }
     }
@@ -290,13 +320,23 @@ aside.company-details{
         // background: red;
     }
 
-    .contact{
+.contact{
     a{display: block;}
     //Use CSS for Enquiries columns
+    // Enquiries container
     >div{
-        columns: auto;
-        columns: 2;
-        column-gap: 40px;
+        // columns: auto;
+        // columns: 2;
+        // column-gap: 40px;
+        display:flex;
+        .col{
+            display: flex;
+            flex-direction: column;
+            // padding: 0 40px 0 0;
+            &:nth-child(1){
+                padding-right:40px;
+            }
+        }
     }
     }
 }

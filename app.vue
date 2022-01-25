@@ -1,18 +1,21 @@
 
 <template>
-    <div id="cursor-swiper"></div>
-    <a href="#subscribe" id="stay-updated" class="anchor">Stay Updated</a>
     <TheHeader />
     <!-- Create a container for the viewport to utilize ScrollTrigger and give smooth scrolling -->
 		<div id="viewport">
 			<div id="content">
         <TheHero />
-        <TheSlider />
-        <NewsletterSubscribe />
-
-        <TheFooter />
+        <!-- <div class="below-fold"> -->
+          <TheSlider />
+          <NewsletterSubscribe />
+          <TheFooter />
+        <!-- </div> -->
      </div>
     </div>
+
+    <div id="cursor-swiper"></div>
+    <a href="#subscribe" id="stay-updated" class="anchor">Stay Updated</a>
+
 </template>
 
 <script>
@@ -26,44 +29,36 @@ import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
 
 export default {
+
   mounted() {
     // Register GSAP ScrollTrigger plugin
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
     //Add smooth scrolling the website
     smoothScroll("#content");
 
-  //use ScrollToPlugin to handle anchor links like STAY UPDATED.
+    //First we need to determine the header's height which is stored as a CSS variable
+    // let headerHeight = window.getComputedStyle(document.documentElement).getPropertyValue('--header-height');
+    var headerHeight = window.getComputedStyle(document.documentElement).getPropertyValue('--header-height');
+    var headerHeightOffset = (Number(headerHeight.replace('px', '')));
 
-  //First we need to determine the header's height which is stored as a CSS variable
-  // let headerHeight = window.getComputedStyle(document.documentElement).getPropertyValue('--header-height');
-  let headerHeight = window.getComputedStyle(document.documentElement).getPropertyValue('--header-height');
-  let headerHeightOffset = (Number(headerHeight.replace('px', '')));
+    //Find the viewport/window height, and then add an offset for the sticky header.
+      var viewport = document.querySelector('#viewport');
+      var viewHeight = (viewport.clientHeight  - headerHeightOffset);
+      // Create an event listener for browser resize
+      // document.getElementById("viewport").addEventListener("resize", this.myEventHandler);
+      // document.getElementById("content").addEventListener("resize", this.myEventHandler);
+      window.addEventListener("resize", this.myEventHandler);
+  
+  //Is the user on mobile?
+  const isMobile = ('ontouchstart' in document.documentElement && navigator.userAgent.match(/Mobi/));
+
+  // if (isMobile) {
+  // console.log('mobile')
+  // }
 
 
-  console.log('Header height: '+ headerHeightOffset+ '');
-
-  // gsap.utils.toArray(".anchor").forEach(function(a) {
-  //   a.addEventListener("click", function(e) {
-  //     e.preventDefault();
-  //     const id = e.target.getAttribute("href"),
-  //           trigger = ScrollTrigger.getById(id);
-
-
-  //     gsap.to(window, {
-  //       duration: 1,
-  //       //Offset the anchor links so that they are below the header when navigating to them
-  //       offsetY: 900,
-  //       scrollTo:{
-  //       //Loop through each anchor, and then use the header height as an offset
-  //       y: trigger ? trigger.end : id, 
-  //       offsetY:headerHeightOffset
-  //     }
-
-  //     });
-  //   });
-  // });
-
-  // Scroll to anchor links with an offset based on the header's height when the user clicks a link
+  
+// Check if link is an anchor link to the same page.
 function getSamePageAnchor (link) {
   if (
     link.protocol !== window.location.protocol ||
@@ -102,37 +97,96 @@ document.querySelectorAll('a[href]').forEach(a => {
 scrollToHash(window.location.hash);
 
   //Find the viewport/window height, and then add an offset for the sticky header.
-  let viewport = document.querySelector('#viewport');
-  let viewHeight = (viewport.clientHeight  - headerHeightOffset);
-  console.log('View height: '+ viewHeight+ '');
-  //   Create a timeline so we can group animated elements together
-  let tl = gsap.timeline({
+  // var viewport = document.querySelector('#viewport');
+  // var viewHeight = (viewport.clientHeight  - headerHeightOffset);
+
+    var logoTimeline = gsap.timeline({
       scrollTrigger: {
+      invalidateOnRefresh: true,
       markers: false,
       trigger: "header",
       pin: false,
       scrub: true,
-      start: "top top",
+      start: "+=0",
+      //  start: () => start,
       //update view height value on refresh
-      end: () => `+=${viewHeight}`,
-      invalidateOnRefresh: true,
+      // end: () => `+=${viewHeight}`,
+      end: () =>  `+=${(viewport.clientHeight  - headerHeightOffset)}`,
+      onRefresh: () => {
+        // console.log('Refreshed');
+      }
+    // onRefresh: killScrub
         
       }
     });
-    
-    
-    
-    tl
 
+  function refreshLogoTimeline(){
+
+      //Update height of the header to match the CSS variable
+      var headerHeight = window.getComputedStyle(document.documentElement).getPropertyValue('--header-height');
+      //remove the px from the returned value
+      var headerHeightOffset = (Number(headerHeight.replace('px', '')));
+
+      //Find the viewport/window height, and then add an offset for the sticky header.
+      var viewport = document.querySelector('#viewport');
+      //View size is equal to the height of the poage, minus the height of the header as that's where all the content is rendered.
+      var viewHeight = (viewport.clientHeight  - headerHeightOffset);
+
+
+    
+    
+    logoTimeline
+      .clear()
       //Use CSS' view height to position the logo at the bottom of the page
       // .fromTo(".logo-container", { transform: `translateY(calc(100vh - var(--header-height) * 1.6)) scale(3)` }, { transform: 'translateY(0px) scale(1)'  }, "0" )
-      .fromTo(".logo-container", { transform: `translateY(${(viewHeight - (headerHeightOffset))}px) scale(3)`, opacity:1 }, { transform: 'translateY(0px) scale(1)'  }, "0" )
+      .fromTo(".logo-container", { 
+        // transform: `translateY(${(viewHeight - (headerHeightOffset))}px) scale(3)`, opacity:1
+        scale: 3,
+        opacity:1,
+        y: () => `${(viewHeight - headerHeightOffset)}`,
+        // y: `${viewHeight - (headerHeightOffset)}`,
+        // y: `100vh - var(--header-height)`,
+        }, 
+        { 
+          // transform: 'translateY(0px) scale(1)'  
+          y: 0,
+          scale: 1,
+          }, "0")
       //Change opacity of header's side menu and hero as user scrolls down
       .fromTo("header aside", { opacity: 0, }, { opacity: 1,  }, "0" )
       .fromTo("section.hero", { opacity: 0 }, { opacity: 1  }, "0" )
       .fromTo("#stay-updated", { opacity: 0 }, { opacity: 1  }, "0" )
 
+
+
+      // .fromTo(".hero-headline", { 
+      //   opacity: 0,
+      //   y: () => `${((viewHeight - headerHeightOffset)*2)}`
+      //   }, { 
+      //     opacity: 1,
+      //     y: () => `${(headerHeightOffset + 20)}`
+      //     }, "0" )
+
     ;
+
+
+
+        // Resize carousel buttons
+        let prevButton = document.querySelector('.swiper-button-prev');
+        let nextButton = document.querySelector('.swiper-button-next');
+        var swiperHeight = document.querySelector(".swiper figure>img").offsetHeight;
+        prevButton.style.height = `${swiperHeight}px`;
+        nextButton.style.height = `${swiperHeight}px`;
+
+  }
+
+
+
+  
+  
+    //Do calculations for window/viewport height upon load.
+    // create the Logo timeline on first load, and then each browser height resize afterwards.
+    refreshLogoTimeline();
 
     //Handle the STAY UPDATED stickiness
     //Create another GSAP timeline to handle this event
@@ -162,17 +216,6 @@ scrollToHash(window.location.hash);
     ;
 
 
-//     ScrollTrigger.create({
-//       trigger: "#content",
-//       start: "top 15px",
-//       // pin for the difference in heights between the content and the sidebar
-//       end: self => "+=" + (document.querySelector("#content").offsetHeight - self.pin.offsetHeight),
-//       pin: "#sidebar",
-//       // before version 3.4.1, the "float" property wasn't copied to the pin-spacer, so we manually do it here. Could do it in a style sheet instead if you prefer. 
-//       onRefresh: self => self.pin.parentNode.style.float = "left",
-//       pinSpacing: false
-// });
-
 
 
 
@@ -193,6 +236,7 @@ scrollToHash(window.location.hash);
 			let scrub = trigger.getTween ? trigger.getTween() : gsap.getTweensOf(trigger.animation)[0]; // getTween() was added in 3.6.2
 			scrub && scrub.kill();
 			trigger.animation.progress(trigger.progress);
+      // console.log("Scrub killed");
 		},
 		height, isProxyScrolling;
 
@@ -249,20 +293,58 @@ scrollToHash(window.location.hash);
 }
 
 
+  //Perform function when browser's height changed.
+  function windowResizeEvent() {
+      //Only refresh the logo timeline if the user is not on mobile
+      // if (!isMobile) {
+      // console.log('Using desktop')
+      refreshLogoTimeline()
+    // }
+      // console.log('View height: '+ viewHeight+ '  - Refreshed');
+  }
+
+  //Listen out for resizing of the browser so that we can update height variables.
+  //I'd like to find a better way to do this.
+  window.onresize = windowResizeEvent;
 
 
 
-  },
-};
 
-// export default defineComponent({
-//   setup() {
-    
-//   },
-// })
+  }, //end mounted
+
+
+
+ setup () {
+   //Define app meta for Nuxt3 (In Nuxt2 it seems this could be done in nuxt.config.js, but there's limited documentation for Nuxt3 )
+    useMeta({
+      meta: [
+        {  
+          title: "Hambly Freeman - Technical Challenge",
+          name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1',
+          name: 'theme-color', content: '#736357',
+          
+           }
+      ],
+    })
+  }, //setup
+
+  
+
+
+}; //export default
+
+
 </script>
 
 
-<style lang="scss">;
+<style>
+/* Global SCSS in stored in assets/scss 
+   /_main.scss
+      - Global rules which apply to the entire site
+   /_sass-variables.scss
+      - Just a few variables for sass, such as media query breakpoints accessible in each .scss file
+   /_variables.scss
+      - CSS variables: branding colours, font sizes, etc.
+*/
 
 </style>

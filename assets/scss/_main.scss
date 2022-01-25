@@ -16,12 +16,10 @@
       // width: 100%;
   
     //   transform-style: preserve-3d;
-    //   backface-visibility: hidden;
-
-      // font-family: 'Open Sans', sans-serif;
-
+      backface-visibility: hidden;
       // padding-bottom: 81px;
       // overflow-y:scroll;
+      -webkit-overflow-scrolling: touch;
   }
   
   // Smooth scrolling
@@ -46,10 +44,11 @@
     /* set a height because the contents are position: absolute, thus natively there's no height */
     // height: 2400px;
     // height: 3400px;
-    height: auto;
+
     height: auto;
     // padding-bottom:110vh;
-    padding: 100vh var(--site-padding) 10vh var(--site-padding);
+    // background: var(--background-color);
+    padding: 100vh var(--site-padding) 1vh var(--site-padding);
     
     // background-image:
     //   linear-gradient(rgba(255,255,255,.07) 2px, transparent 2px),
@@ -65,15 +64,19 @@
 .hidden{
     display: none !important;
 }
-
 /* Typography
 --------------------------------------------- */
 // import fonts
-@font-face {
-	font-family: "Messina Sans";
-	src: url(assets/fonts/MessinaSansWeb-Regular.woff),
-		url(assets/fonts/MessinaSansWeb-Regular.woff2);
-  }
+// @font-face {
+// 	font-family: "Messina Sans";
+// 	src: url(assets/fonts/MessinaSansWeb-Regular.woff),
+// 		url(assets/fonts/MessinaSansWeb-Regular.woff2);
+//   }
+  @font-face {
+    font-family: "Messina Sans";
+    src: url(assets/fonts/MessinaSansWeb-Regular.woff2);
+    }
+  
 
 
 body,
@@ -85,8 +88,6 @@ textarea {
 	color: var(--font-color);
 	font-family: "Messina Sans", sans-serif;
 }
-// input{color: #404040 ;}
-
 h1,
 h2,
 h3,
@@ -94,7 +95,6 @@ h4,
 h5,
 h6 {
 	clear: both;
-	// font-family: 'Karla', sans-serif;
 	font-weight:normal;
 	margin:0 0 0.2rem 0;
 }
@@ -127,17 +127,20 @@ header aside, footer a{
 a {
 	color: var(--font-color);
 	text-decoration: none;
-	transition: all 0.4s ease-out;
+	// transition: all 0.4s ease-out;
 }
 
 a:visited {
-	color: var(--font-color);
+	// color: var(--font-color);
+  // color: #a36bbc;
+  opacity:0.9;
 }
 
 a:hover,
 a:focus,
 a:active {
-	color: var(--font-color);
+	// color: var(--font-color);
+  color: #ab8a71;
 	opacity:0.7;
 }
 
@@ -155,7 +158,7 @@ a, div.button{
     position: relative;
     &:before{
         content: "";
-        transition: transform 0.3s cubic-bezier(0.104, 0.204, 0.492, 1);
+        transition: transform 0.3s cubic-bezier(0.104, 0.204, 0.492, 1), color 0.6s ease-in;
         position: absolute;
         display: block;
         height: 1px;

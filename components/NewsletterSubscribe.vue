@@ -60,9 +60,8 @@ export default {
   bottom: 30px;
   left: var(--site-padding);
   padding:0px;
-  //  background:red;
+  opacity:0;
   z-index: 11;
-  // font-size:1.5em;
   text-transform: uppercase;
 }
 
@@ -91,14 +90,17 @@ section.newsletter{
             border: none;
             padding: 0;
             opacity: 0.7;
-            margin: -20px 0 0 0;
+            margin: -23px 0 0 0;
             // height:162px;
+            max-width: 100%;
+            text-indent: -3px;
 
             &:focus{
                 outline: none;
             }
             &:hover{
                 opacity:1;
+                
             }
         }
        label {
@@ -106,7 +108,9 @@ section.newsletter{
         }
     }
 }
-section.newsletter h2, #stay-updated{
+
+
+    section.newsletter h2, #stay-updated{
         font-size:1.2em;
         text-transform: uppercase;
         // padding-left: 13px;
@@ -127,7 +131,8 @@ input[type=submit]{
 
 //Change input placeholder colour.
 ::placeholder{
-    color: #d5d0cd;
+    color: var(--font-color);
+    opacity: 0.3;
 }
 
 
@@ -135,22 +140,26 @@ input[type=submit]{
 /* Small only */
 @media (max-width: 39.9375em) {
     section.newsletter{
-        
+        padding-bottom:5em;
+        margin-top: 5em;
     }
 }
 /* Medium and up */
 @media (min-width: 40em) {
     section.newsletter{
         h3{
-            height:162px;
+            height:168px;
             line-height:unset;
         }
         form{
             input:not([type=submit]){
 
-                height:162px;
+                height:168px;
                 }
 
+        }
+        form input:not([type=submit]),h3{
+            text-indent: -5px;
         }
     }
 

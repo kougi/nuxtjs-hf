@@ -5,13 +5,7 @@ export default defineNuxtConfig({
     // ssr: true,
     // buildDir: 'nuxt-build',
     
-    meta: {
-        meta: [
-          // <meta name="viewport" content="width=device-width, initial-scale=1">
-          { name: 'viewport', content: 'width=device-width, initial-scale=1' }
-        ],
-    },
-
+    //This doesn't work in Nuxt3, so I've added the meta in app.vue
     head: {
         title: "Hambly Freeman - Technical Challenge",
         meta: [

@@ -9,12 +9,11 @@
     "nuxt-gsap-module": "^1.6.0",
     "nuxt3": "latest",
     "sass": "^1.49.0",
-    "scss": "^0.2.4",
-    "sass-loader": "^10.2.1"
+    "sass-loader": "^10.2.1",
+    "scss": "^0.2.4"
   },
   "dependencies": {
     "gsap": "^3.9.1",
-    "swiper": "^7.4.1",
-    "vue-extend-layout": "^2.0.6"
+    "swiper": "^7.4.1"
   }
 }
