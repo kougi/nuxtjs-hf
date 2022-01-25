@@ -100,9 +100,9 @@
             //Currently using absolute addresses for images. usual path: assets/img/carousel-images/x.jpg
             //https://jbeach.xyz/hf-challenge/assets/img/carousel-images/
             slides: [
-                { id: 1, image: "~/assets/img/carousel-images/c1.jpg", moreInfo: 1, name: "Sample Title", availability: "Now", location: "Soho", size: "4,200", description: "This is a description" },
+                { id: 1, image: "https://jbeach.xyz/hf-challenge/assets/img/carousel-images/c1.jpg", moreInfo: 1, name: "Sample Title", availability: "Now", location: "Soho", size: "4,200", description: "This is a description" },
                 { id: 2, image: "https://jbeach.xyz/hf-challenge/assets/img/carousel-images/c2.jpeg", moreInfo: 1, name: "Lorem Ipsum", availability: "Soon", location: "Eastend", size: "4,700", description: "This is a description" },
-                { id: 3, image: "~/assets/img/carousel-images/c3.jpeg", moreInfo: 1, name: "Etcetera", availability: "TBA", location: "Southend", size: "3,200", description: "This is a description" },
+                { id: 3, image: "https://jbeach.xyz/hf-challenge/assets/img/carousel-images/c3.jpeg", moreInfo: 1, name: "Etcetera", availability: "TBA", location: "Southend", size: "3,200", description: "This is a description" },
                 { id: 4, image: "https://jbeach.xyz/hf-challenge/assets/img/carousel-images/c4.jpeg", moreInfo: 1, name: "Office", availability: "Later", location: "Camden", size: "7,400", description: "This is a description. <br> Testing" },
                 { id: 5, image: "https://jbeach.xyz/hf-challenge/assets/img/carousel-images/c5.jpeg", moreInfo: 0, name: "Another office", availability: "Postponed", location: "Notting Hil", size: "6,100", description: "This is a description. <br> Testing" },
   
