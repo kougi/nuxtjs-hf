@@ -1,10 +1,8 @@
-# Hambly Freeman Challenge - Nuxt.js3
+# Hambly Freeman Challenge - Made in Nuxt3
+Still a work in progress with a few bugs to fix.
 
-Deploy your [Nuxt.js](https://nuxtjs.org) project to Vercel with zero configuration.
+_Site hosted on vercel at: https://nuxtjs-hf.vercel.app/_
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/vercel/tree/main/examples/nuxtjs&template=nuxtjs)
-
-_Live Example: https://nuxtjs-template.vercel.app_
 
 ## Setup
 
