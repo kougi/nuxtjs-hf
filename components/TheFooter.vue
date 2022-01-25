@@ -4,8 +4,8 @@
         <div class="row">
             <div class="col-xs-12 col-md-6">
                 <a href="#">
-                    <img src="https://jbeach.xyz/hf-challenge/assets/img/thirdway.svg" class="logo" alt="Thirdway">
-                    <!-- <img src="assets/img/thirdway.svg" class="logo" alt="Thirdway"> -->
+                    <!-- <img src="https://jbeach.xyz/hf-challenge/assets/img/thirdway.svg" class="logo" alt="Thirdway"> -->
+                    <img src="~/assets/img/thirdway.svg" class="logo" alt="Thirdway">
                     </a>
             </div>
             <nav class="col-xs-12 col-md-6">
