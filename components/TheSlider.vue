@@ -63,6 +63,18 @@
 
   </swiper>
   
+
+
+<!-- <details>
+  <summary>
+    <span data-css-icon="menu">etc<i></i></span>
+  </summary>
+ <div>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam ab animi velit est unde, quod, debitis voluptas, tenetur possimus corporis veritatis commodi eveniet placeat officiis non! Et consequatur nulla molestiae?</div>
+</details> -->
+
+
+
+
 </div>
 </template>
 <script>
@@ -97,7 +109,7 @@
 
             //Array of slides for the slideshow, "more info" section can be disabled by setting moreInfo
 
-            //Currently using absolute addresses for images. usual path: assets/img/carousel-images/x.jpg
+            //Currently using absolute addresses for images due to vercel issue. usual path: assets/img/carousel-images/x.jpg
             //https://jbeach.xyz/hf-challenge/assets/img/carousel-images/
             slides: [
                 { id: 1, image: "https://jbeach.xyz/hf-challenge/assets/img/carousel-images/c1.jpg", moreInfo: 1, name: "Sample Title", availability: "Now", location: "Soho", size: "4,200", description: "This is a description" },
@@ -207,7 +219,7 @@
         console.log('next');
         }, false);
 
-        //Change the cursor to "Previous" (Will try replace .svg with plain text)
+        //Change the cursor to "Previous"
         prevButton.addEventListener("mouseenter", function( event ) {
         cursor.innerHTML = "Previous";
         console.log('previous');
@@ -222,7 +234,41 @@
         });
 
 
-    },
+
+
+
+
+        //Get the height of the <details> elements so that we can properly animate it
+        function setDetailsHeight(selector, wrapper = document) {
+            const setHeight = (detail, open = false) => {
+                detail.open = open;
+                const rect = detail.getBoundingClientRect();
+                detail.dataset.width = rect.width;
+                detail.style.setProperty(open ? `--expanded` : `--collapsed`,`${rect.height}px`);
+            }
+            const details = wrapper.querySelectorAll(selector);
+            const RO = new ResizeObserver(entries => {
+                return entries.forEach(entry => {
+                    const detail = entry.target;
+                    const width = parseInt(detail.dataset.width, 10);
+                    if (width !== entry.contentRect.width) {
+                        detail.removeAttribute('style');
+                        setHeight(detail);
+                        setHeight(detail, true);
+                        detail.open = false;
+                    }
+                })
+            });
+            details.forEach(detail => {
+                RO.observe(detail);
+            });
+
+            console.log("<detail> height refreshed")
+    }
+
+    /* Run it */
+    setDetailsHeight('details');
+    }, //mounted
 
    
 
@@ -295,7 +341,7 @@
             display:block;
             cursor: pointer;
 
-            border-top: solid 1px var(--font-color);
+            // border-top: solid 1px var(--font-color);
             margin-top: -1px;
             // position: relative;
         }
@@ -308,33 +354,35 @@
             margin-top: 15px;
         }
 
-    //When details is opened
-    &[open]{
-        display:block;
-        // padding-bottom:1.5em;
-        padding-top:0;
-        animation: open .2s linear;
-        padding-bottom: 60px;
-        summary{
-            position:absolute;
-            bottom: 0;
-            left:0;
-            border:unset;
-        }
-        //buttons
-        .open{
-            display: none;
-        }
-        .close{
-            display: block;
-        }
-    }
+        //When details is opened
+        // &[open]{
+        //     display:block;
+        //     padding-top:0;
+        //     animation: open .2s linear;
+        //     padding-bottom: 60px;
+            
+        //     summary{
+        //         position:absolute;
+        //         bottom: 0;
+        //         left:0;
+        //         border:unset;
+        //     }
+        //     //buttons
+        //     .open{
+        //         display: none;
+        //     }
+        //     .close{
+        //         display: block;
+        //     }
+        // }
     }
     
 }
 
 .swiper{
     width: 100%;
+    //Put padding at bottom for the More/Less info buttons to rest
+    padding-bottom: 5em;
 }
 .swiper-button-next,.swiper-button-prev{
     color: var(--background-color);
@@ -454,14 +502,145 @@
 }
 
 // Animation for opening details
-@keyframes open {
-    0% {
-      opacity: 0;
-      transform: translateY(-10px);
+// @keyframes open {
+//     0% {
+//       opacity: 0;
+//       transform: translateY(-10px);
+//     }
+//     100% {
+//       opacity: 1;
+//       transform: translateY(0);
+//     }
+//   }
+
+//   CSS for opening <details>
+details {
+    span {
+        --animdur: .3s;
+        --loading-animdur: 0.8s;
+        --animtf: ease-in;
+        --bdw: 2px;
+        --bdrs: 50%;
+        --bgc: transparent;
+        --c: currentcolor;
+        --dots-bgc: silver;
+        --dots-size: 0.5rem;
+        --icon-size: 1rem;
+        --size: 2.5rem;
+
+        height: var(--size);
+        align-items: center;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: var(--bgc);
+        border-radius: var(--bdrs);
+        box-sizing: border-box;
+        display: inline-flex;
+        justify-content: center;
+        position: relative;
+        transition: background-color var(--animdur) var(--animtf);
+        height: var(--size);
+        width: var(--size);
+
+        i{
+            --bdrs: 0;
+            --m: 7px;
+            align-items: center;
+            background-color: var(--bgc);
+            border-radius: var(--bdrs);
+            box-sizing: border-box;
+            display: inline-flex;
+            height: var(--size);
+            justify-content: center;
+            position: relative;
+            transition: background-color var(--animdur) var(--animtf);
+            width: var(--size);
+
+
+            position: relative;
+            right: calc((var(--size) - var(--w)) / 2);
+
+            &,&:before,&:after{
+                transform-origin: 50% 50%;
+	            transition: all var(--animdur) var(--animtf);
+
+                /* Width need to be the diagonal of the down-arrow side-length (--size): sqrt(2) * --size. */
+                --w: calc(var(--icon-size) * 1.4142135623730950488016887242097);
+                background: var(--c);
+                content: '';
+                height: var(--bdw);
+                position: absolute;
+                width: var(--w);
+                top: calc(0px - var(--m));
+
+            }
+
+            &:after{
+                top: var(--m);
+            }
     }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
     }
-  }
+
+    &[open]{
+        >summary>span i{
+            background-color: transparent;
+
+            &:before{transform: translateY(var(--m)) rotate(45deg);}
+            &:after{transform: translateY(calc(0px - var(--m))) rotate(-45deg); }
+        }
+        // [open] > summary > [data-css-icon*="menu"] i { background-color: transparent; }
+        // [open] > summary > [data-css-icon*="menu"] i::after { transform: translateY(calc(0px - var(--m))) rotate(-45deg); }
+        // [open] > summary > [data-css-icon*="menu"] i::before { transform: translateY(var(--m)) rotate(45deg); }
+    }
+}
+
+
+ /* For this demo only */
+    // button, details { width: 25rem; }
+    // button { font-family: inherit; font-size: inherit; }
+    details {
+        height: var(--collapsed);
+        // overflow: hidden;
+        transition: height 300ms cubic-bezier(0.4, 0.01, 0.165, 0.99);
+
+        &[open]{
+            height: var(--expanded);
+
+            .open{
+                display: none;
+            }
+            .close{
+                display: block;
+            }
+        }
+        summary{
+                position:absolute;
+                bottom: 0;
+                left:0;
+                border:unset;
+                bottom: -1.3em;
+            }
+    }
+    details[open] 
+    button,
+    summary { 
+        // background-color: var(--bgc);
+        // border: 0;
+        // border-radius: 5px;
+        // color: var(--c, inherit);
+        // list-style-type: none;
+        // margin: 0.5rem 0;
+        // outline: none;
+        // padding-bottom: 0.5rem;
+        // padding-top: 0.5rem;
+        // padding-inline-end: 0.5rem;
+        // padding-inline-start: 1rem;
+        // user-select: none;
+    }
+    summary::marker { display: none; }
+    summary::-webkit-details-marker { display: none; }
+
+
 </style>

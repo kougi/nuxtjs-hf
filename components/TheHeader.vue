@@ -145,6 +145,7 @@ aside.company-details{
 
     // To prevent logo jankiness on initial load
     transform: scale(3) translatey(100vh);
+    opacity:0;
 
     img{
         max-width: 80px;
