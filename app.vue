@@ -229,6 +229,7 @@ data() {
          }else{
           console.log("resized")
           logoTimeline.kill()
+          stayUpdatedButton.kill()
          }
 
   
@@ -266,6 +267,28 @@ data() {
         //     }, "0" )
 
       ;
+
+
+          //Handle the STAY UPDATED stickiness
+        //Create another GSAP timeline to handle this event
+        let stayUpdatedButton = gsap.timeline({
+          scrollTrigger: {
+              trigger: '.newsletter',
+              start: 'top 100%-=40', // which means "when the top of the trigger hits 40px above the bottom of the viewport
+            // end: 'bottom 50%',
+              toggleActions: "play none none reset",
+              markers: false,
+            },
+        });
+        stayUpdatedButton
+          .to('#stay-updated', {
+            //Change the positioning once it collides with the newsletter subscribe form
+            position:'absolute'
+          }, "0")
+          .to('h2#subscribe', {
+            // opacity:1,
+            visibility: 'visible',
+          }, "0");
 
 
           // Resize carousel buttons
