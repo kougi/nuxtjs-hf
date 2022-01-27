@@ -42,6 +42,8 @@ data() {
   created() {
     // Register GSAP ScrollTrigger plugin
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+    
   },
 
   mounted() {
@@ -63,7 +65,10 @@ data() {
     // window.addEventListener("orientationchange", this.resizeHandler);
     screen.orientation.addEventListener('change', this.resizeHandler)
 
-
+    //Jump to top of page on refresh
+    if (history.scrollRestoration) {
+      history.scrollRestoration = 'manual';
+    }
     
     //Add smooth scrolling the website
     smoothScroll("#content");
@@ -139,6 +144,10 @@ data() {
 
       //Run the resize handler on initial load
       this.resizeHandler()
+      // setTimeout(function(){
+           
+      //       }, 100);
+      
 
 
       // this is the helper function that sets it all up. Pass in the content <div> and then the wrapping viewport <div> (can be the elements or selector text). It also sets the default "scroller" to the content so you don't have to do that on all your ScrollTriggers.
@@ -325,9 +334,9 @@ data() {
           // Resize carousel buttons. use a timer as as otherwise it uses the previous size of the window.
           let prevButton = document.querySelector('.swiper-button-prev');
           let nextButton = document.querySelector('.swiper-button-next');
-          let swiperHeight = document.querySelector(".swiper figure>img").offsetHeight;
+          
           setTimeout(function(){
-           
+           let swiperHeight = document.querySelector(".swiper figure>img").offsetHeight;
             console.log("Swiper height: "+swiperHeight+"")
             prevButton.style.height = `${swiperHeight}px`;
             nextButton.style.height = `${swiperHeight}px`;
@@ -373,7 +382,7 @@ data() {
 
   @font-face {
     font-family: "Messina Sans";
-    src: url(~/assets/fonts/MessinaSansWeb-Regular.woff2) format('font-woff2');  
+    src: url(~assets/fonts/MessinaSansWeb-Regular.woff2) format('font-woff2');  
     font-weight: normal;
     font-style: normal;
     }
