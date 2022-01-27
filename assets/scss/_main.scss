@@ -10,16 +10,9 @@
   //   overflow-y:scroll;
   // }
   body {
-
-
       background: var(--background-color);
-      // padding: 0;
-      // margin: 0;
-      // width: 100%;
-  
-    //   transform-style: preserve-3d;
+      //transform-style: preserve-3d;
       backface-visibility: hidden;
-      // padding-bottom: 81px;
       // overflow-y:scroll;
       -webkit-overflow-scrolling: touch;
   }
@@ -76,8 +69,9 @@
 //   }
   @font-face {
     font-family: "Messina Sans";
-    src: url(~/assets/fonts/MessinaSansWeb-Regular.woff2);
-    // src: url(https://jbeach.xyz/hf-challenge/assets/fonts/MessinaSansWeb-Regular.woff2) format('woff2');
+    src: url(~/assets/assets/fonts/MessinaSansWeb-Regular.eot),
+         url(~/assets/assets/fonts/MessinaSansWeb-Regular.woff2) format('font-woff2');
+          
     font-weight: normal;
     font-style: normal;
     }
