@@ -515,7 +515,7 @@ const htmlTemplate = (params) => `<!DOCTYPE html>
 </html>
 `;
 
-const STATIC_ASSETS_BASE = "/_nuxt/E:/server/wampstack-7.4.16-0/apache2/htdocs/nuxtjs-hf/dist" + "/" + "1643277380";
+const STATIC_ASSETS_BASE = "/_nuxt/E:/server/wampstack-7.4.16-0/apache2/htdocs/nuxtjs-hf/dist" + "/" + "1643278563";
 const PAYLOAD_JS = "/payload.js";
 const getClientManifest = cachedImport(() => import('./client.manifest.mjs'));
 const getSSRApp = cachedImport(() => import('./server2.mjs'));

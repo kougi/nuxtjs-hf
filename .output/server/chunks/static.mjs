@@ -64,43 +64,43 @@ const assets = {
   "/_nuxt/bootstrap-3a0682c4.mjs": {
     "type": "application/javascript",
     "etag": "\"405aa-cLp8j8um31qAl85/RyCF8oEBubI\"",
-    "mtime": "2022-01-27T09:56:26.567Z",
+    "mtime": "2022-01-27T10:16:10.602Z",
     "path": "../public/_nuxt/bootstrap-3a0682c4.mjs"
   },
-  "/_nuxt/bootstrap.4d41fff4.css": {
+  "/_nuxt/bootstrap.fc158df7.css": {
     "type": "text/css; charset=utf-8",
-    "etag": "\"7a18-bb0c0g5YFRhm+MyzpeTRh0Fv7SM\"",
-    "mtime": "2022-01-27T09:56:26.567Z",
-    "path": "../public/_nuxt/bootstrap.4d41fff4.css"
+    "etag": "\"7a18-sc3p2f8RZ08+CfR7dT5fIUIe1Lc\"",
+    "mtime": "2022-01-27T10:16:10.602Z",
+    "path": "../public/_nuxt/bootstrap.fc158df7.css"
   },
   "/_nuxt/entry-f9cfd047.mjs": {
     "type": "application/javascript",
     "etag": "\"47-+vNJ9YWjFPgrbS09M0BYK4m/h3Q\"",
-    "mtime": "2022-01-27T09:56:26.567Z",
+    "mtime": "2022-01-27T10:16:10.601Z",
     "path": "../public/_nuxt/entry-f9cfd047.mjs"
   },
   "/_nuxt/manifest.json": {
     "type": "application/json",
-    "etag": "\"254-mcGp2XWubi4O3wiNXqt3tbxYFZg\"",
-    "mtime": "2022-01-27T09:56:26.570Z",
+    "etag": "\"254-QzV8bfGbJ1hCuvZOsZZnkYcPQNU\"",
+    "mtime": "2022-01-27T10:16:10.602Z",
     "path": "../public/_nuxt/manifest.json"
   },
   "/_nuxt/MessinaSansWeb-Regular.af35c44f.woff2": {
     "type": "font/woff2",
     "etag": "\"ba29-nF214v1RRVMjkDRwQuOuZZ3Qfow\"",
-    "mtime": "2022-01-27T09:56:26.567Z",
+    "mtime": "2022-01-27T10:16:10.601Z",
     "path": "../public/_nuxt/MessinaSansWeb-Regular.af35c44f.woff2"
   },
   "/_nuxt/thirdway.28d78779.svg": {
     "type": "image/svg+xml",
     "etag": "\"3138-SHh212D3kZSBIcEXBgnCVNuwXzc\"",
-    "mtime": "2022-01-27T09:56:26.567Z",
+    "mtime": "2022-01-27T10:16:10.601Z",
     "path": "../public/_nuxt/thirdway.28d78779.svg"
   },
   "/_nuxt/txo_logo.d1de97a4.svg": {
     "type": "image/svg+xml",
     "etag": "\"23b-uzV7AkaOVXZZb9zfw5eFP6GIYp0\"",
-    "mtime": "2022-01-27T09:56:26.567Z",
+    "mtime": "2022-01-27T10:16:10.601Z",
     "path": "../public/_nuxt/txo_logo.d1de97a4.svg"
   },
   "/assets/fonts/MessinaSansWeb-Regular.eot": {
@@ -144,12 +144,6 @@ const assets = {
     "etag": "\"38a-ts+9m+vztO5/3RyyiMYOwxYgDU0\"",
     "mtime": "2020-07-23T12:05:10.000Z",
     "path": "../public/assets/img/txo_logo_2.svg"
-  },
-  "/assets/scss-delete/mixins.scss": {
-    "type": "text/x-scss; charset=utf-8",
-    "etag": "\"0-2jmj7l5rSw0yVb/vlWAYkK/YBwk\"",
-    "mtime": "2022-01-22T12:07:16.888Z",
-    "path": "../public/assets/scss-delete/mixins.scss"
   },
   "/assets/scss-delete/_main.scss": {
     "type": "text/x-scss; charset=utf-8",
@@ -213,7 +207,7 @@ function getAsset (id) {
 
 const METHODS = ["HEAD", "GET"];
 const TWO_DAYS = 2 * 60 * 60 * 24;
-const STATIC_ASSETS_BASE = "/_nuxt/E:/server/wampstack-7.4.16-0/apache2/htdocs/nuxtjs-hf/dist" + "/" + "1643277380";
+const STATIC_ASSETS_BASE = "/_nuxt/E:/server/wampstack-7.4.16-0/apache2/htdocs/nuxtjs-hf/dist" + "/" + "1643278563";
 async function serveStatic(req, res) {
   if (!METHODS.includes(req.method)) {
     return;

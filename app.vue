@@ -371,4 +371,11 @@ data() {
       - CSS variables: branding colours, font sizes, etc.
 */
 
+  @font-face {
+    font-family: "Messina Sans";
+    src: url(~/assets/fonts/MessinaSansWeb-Regular.woff2) format('font-woff2');  
+    font-weight: normal;
+    font-style: normal;
+    }
+
 </style>

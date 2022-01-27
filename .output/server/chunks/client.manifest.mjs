@@ -12,7 +12,7 @@ const client_manifest = {
     "src": "node_modules/nuxt3/dist/app/bootstrap.mjs",
     "isDynamicEntry": true,
     "css": [
-      "bootstrap.4d41fff4.css"
+      "bootstrap.fc158df7.css"
     ],
     "assets": [
       "txo_logo.d1de97a4.svg",
