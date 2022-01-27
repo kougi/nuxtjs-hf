@@ -158,6 +158,8 @@
     },
     mounted() {
 
+   
+
         //Open a <details> on page load  so that it adds the correct height to the page with GSAP's smooth scroll
         // document.body.querySelectorAll('details').forEach((e) => (e.hasAttribute('open')) ? e.removeAttribute('open') : e.setAttribute('open',false))
         
@@ -442,6 +444,7 @@
     #cursor-swiper{
         display: none;
     }
+
     .swiper-button-next,.swiper-button-prev{
         top: 2em;
         font-size:0.4em;
@@ -454,7 +457,8 @@
     }
 
     .carousel{
-        margin-top:5em;
+        // If on mobile, add margin to the top of the carousel due to the hero being set to fixed position
+        margin-top:200vh;
         details[open] {
             padding-bottom: 30px;
         }

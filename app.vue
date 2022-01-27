@@ -74,6 +74,89 @@ data() {
     smoothScroll("#content");
     
 
+
+
+      //If on mobile, set the hero to fixed so that we can animate it outside of the smoothscroll container
+        if (isMobile) {
+            console.log('mobile');
+            heroMobile();
+        }
+
+
+        function heroMobile(){
+            // console.log("APP height "+this.$root.context.app.height+"")
+            document.body.appendChild(document.querySelector('.hero'));
+
+                var heroTimeline = gsap.timeline({
+                scrollTrigger: {
+                invalidateOnRefresh: true,
+                markers: false,
+                // trigger: "header",
+                trigger: ".hero-headline",
+                pin: false,
+                scrub: true,
+                // start: "+=0",
+                start: "top bottom",
+                //  start: () => start,
+                // start: "+=0",
+                //update view height value on refresh
+                // end: () => "bottom bottom+=500",
+                endTrigger: '.carousel',
+                end: "+=1000",
+                 pinSpacing: false,
+                // end: () => "bottom bottom -=600",
+                // end: () =>  `+=${(viewport.clientHeight  - headerHeightOffset)}`,
+                onRefresh: () => {
+                    console.log('Refreshed');
+                    //  ScrollTrigger.update();
+                }
+                // onRefresh: killScrub
+                    
+                }
+                });
+                heroTimeline
+                    .clear()
+                    //Use CSS' view height to position the logo at the bottom of the page
+                    // .fromTo(".logo-container", { transform: `translateY(calc(100vh - var(--header-height) * 1.6)) scale(3)` }, { transform: 'translateY(0px) scale(1)'  }, "0" )
+                  
+                  
+                  .fromTo
+                  (".hero-headline", { 
+                        // scale: 3,
+                        opacity:1,
+                        // y: () => `${(viewport.clientHeight  - headerHeightOffset - headerHeightOffset)}`,
+                        y: () => `100vh`,
+                        }, 
+                        { 
+                         y: 0,
+                        scale: 1,
+                        }, "0")
+                    //Change opacity of header's side menu and hero as user scrolls down
+                    .fromTo(".hero-paragraph", 
+                    { y: 600, 
+                    scale:0,}, 
+                    { y: 0, 
+                    scale: 1 }, 
+                    "0" )
+                    // .fromTo("section.hero", { opacity: 0 }, { opacity: 1  }, "0" )
+                    // .fromTo("#stay-updated", { opacity: 0 }, { opacity: 1  }, "0" )
+                    ;
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
     // Create the Stay update button's timeline]
       //Handle the STAY UPDATED stickiness
     //Create another GSAP timeline to handle this event

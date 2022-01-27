@@ -73,7 +73,7 @@ h2#subscribe{
 
 section.newsletter{
     margin-top: 10em;
-    padding-bottom: 3.5em;
+    padding-bottom: 10em;
     h3{
         margin:0;
     }
@@ -94,6 +94,7 @@ section.newsletter{
             // height:162px;
             max-width: 100%;
             // text-indent: -3px;
+            cursor: pointer;
 
             &:focus{
                 outline: none;

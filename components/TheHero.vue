@@ -36,128 +36,92 @@ export default {
 
 
         mounted() {
-            // gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-            // var scrollSunTl = gsap.timeline();
-            // scrollSunTl.to('#stay-updated', {
-            // scrollTrigger: {
-            //     trigger: '.newsletter',
-            //     start: 'top 100%-=40', // which means "when the top of the trigger hits 40px above the bottom of the viewport
-            // // end: 'bottom 50%',
-            //     toggleActions: "play none none reset",
-            //     markers: true,
-            // },
-            // position:'absolute', // new
-            // top:10 // new 
-            // });
+        //register plugins
+        gsap.registerPlugin(ScrollTrigger);
 
 
-    gsap.registerPlugin(ScrollTrigger);
+        // //Is the user on mobile?
+        // const isMobile = ('ontouchstart' in document.documentElement && navigator.userAgent.match(/Mobi/));
 
-            // var action = gsap.to('.hero-headline h1', {color:'yellow', ease: 'none', duration: 0.25 });
-  
-
-            //     ScrollTrigger.create({
-            //     trigger: ".hero-headline",
-            //     start: "top bottom",
-            //     endTrigger: '.carousel',
-            //     end: () => "top top -=200",
-            //     markers:true,
-            //     pin: true,
-            //     pinSpacing: false,
-            //     animation: action,
-            //     toggleActions: 'play reverse play reverse'
-            //     });
-
-
-                // var trigger = document.querySelector(".hero-headline");
-
-                // const t13 = gsap.timeline({
-                // scrollTrigger: {
-                //     trigger: ".hero-headline",
-                //     endTrigger: ".carousel",
-                //     scrub: true,
-                //     start: "top top",
-                //     end: "top top",
-                //     pin: true,
-                //     markers: true
-                // }
-                // });
-
-                // pin each box for 300px when they hit the top
-            // gsap.utils.toArray("section.hero").forEach(box => {
-            // ScrollTrigger.create({
-            //     trigger: box,
-            //     pin: true,
-            //     start: "top top",
-            //     end: "+=700"
-            // });
-            // });
+        // //If on mobile, set the hero to fixed so that we can animate it outside of the smoothscroll container
+        // if (isMobile) {
+        //     console.log('mobile');
+        //     heroMobile();
+        // }
+        // .appendChild(document.querySelector('.hero'));
+        
 
 
 
+        // function heroMobile(){
+        //     // console.log("APP height "+this.$root.context.app.height+"")
+        //     document.body.appendChild(document.querySelector('.hero'));
 
-            
-            
-            //  var heroTimeline = gsap.timeline({
-            //     scrollTrigger: {
-            //     invalidateOnRefresh: true,
-            //     markers: false,
-            //     // trigger: "header",
-            //     trigger: ".hero-headline",
-            //     pin: false,
-            //     scrub: true,
-            //     // start: "+=0",
-            //     start: "top bottom",
-            //     //  start: () => start,
-            //     // start: "+=0",
-            //     //update view height value on refresh
-            //     // end: () => "bottom bottom+=500",
-            //     endTrigger: '.carousel',
-            //     pin: true,
-            //      pinSpacing: false,
-            //     end: () => "top top -=200",
-            //     // end: () =>  `+=${(viewport.clientHeight  - headerHeightOffset)}`,
-            //     onRefresh: () => {
-            //         console.log('Refreshed');
-            //         //  ScrollTrigger.update();
-            //     }
-            //     // onRefresh: killScrub
+        //         var heroTimeline = gsap.timeline({
+        //         scrollTrigger: {
+        //         invalidateOnRefresh: true,
+        //         markers: false,
+        //         // trigger: "header",
+        //         trigger: ".hero-headline",
+        //         pin: false,
+        //         scrub: true,
+        //         // start: "+=0",
+        //         start: "top bottom",
+        //         //  start: () => start,
+        //         // start: "+=0",
+        //         //update view height value on refresh
+        //         // end: () => "bottom bottom+=500",
+        //         endTrigger: '.carousel',
+        //         end: "+=1000",
+        //          pinSpacing: false,
+        //         // end: () => "bottom bottom -=600",
+        //         // end: () =>  `+=${(viewport.clientHeight  - headerHeightOffset)}`,
+        //         onRefresh: () => {
+        //             console.log('Refreshed');
+        //             //  ScrollTrigger.update();
+        //         }
+        //         // onRefresh: killScrub
                     
-            //     }
-            //     });
-
-            //     heroTimeline
-            //         .clear()
-            //         //Use CSS' view height to position the logo at the bottom of the page
-            //         // .fromTo(".logo-container", { transform: `translateY(calc(100vh - var(--header-height) * 1.6)) scale(3)` }, { transform: 'translateY(0px) scale(1)'  }, "0" )
+        //         }
+        //         });
+        //         heroTimeline
+        //             .clear()
+        //             //Use CSS' view height to position the logo at the bottom of the page
+        //             // .fromTo(".logo-container", { transform: `translateY(calc(100vh - var(--header-height) * 1.6)) scale(3)` }, { transform: 'translateY(0px) scale(1)'  }, "0" )
                   
                   
-            //     //   .fromTo
-            //     //   (".hero-headline", { 
-            //     //         // scale: 3,
-            //     //         opacity:1,
-            //     //         // y: () => `${(viewport.clientHeight  - headerHeightOffset - headerHeightOffset)}`,
-            //     //         // y: () => `50vh`,
+        //           .fromTo
+        //           (".hero-headline", { 
+        //                 // scale: 3,
+        //                 opacity:1,
+        //                 // y: () => `${(viewport.clientHeight  - headerHeightOffset - headerHeightOffset)}`,
+        //                 y: () => `100vh`,
+        //                 }, 
+        //                 { 
+        //                  y: 0,
+        //                 scale: 1,
+        //                 }, "0")
+        //             //Change opacity of header's side menu and hero as user scrolls down
+        //             .fromTo(".hero-paragraph", 
+        //             { y: 600, 
+        //             scale:0,}, 
+        //             { y: 0, 
+        //             scale: 1 }, 
+        //             "0" )
+        //             // .fromTo("section.hero", { opacity: 0 }, { opacity: 1  }, "0" )
+        //             // .fromTo("#stay-updated", { opacity: 0 }, { opacity: 1  }, "0" )
+        //             ;
 
-            //     //         }, 
-            //     //         { 
-            //     //         // y: 0,
-            //     //         scale: 1,
-            //     //         }, "0")
+
+        // }
+
+            
 
 
-            //         //Change opacity of header's side menu and hero as user scrolls down
-            //         .fromTo(".hero-paragraph", 
-            //         { y: 600, 
-            //         scale:0,}, 
-            //         { y: 0, 
-            //         scale: 1 }, 
-            //         "0" )
-            //         // .fromTo("section.hero", { opacity: 0 }, { opacity: 1  }, "0" )
-            //         // .fromTo("#stay-updated", { opacity: 0 }, { opacity: 1  }, "0" )
 
-            //         ;
 
+
+   
         } //mounted
 
 }
@@ -214,16 +178,16 @@ section.hero{
     }
     section.hero{
 
-        // padding: 0 var(--site-padding) 0 var(--site-padding);
+        padding: var(--header-height) var(--site-padding) 0 var(--site-padding);
 
 
         // height: 110vh;
-        // position:fixed;
-        // margin:0;
-        // height:100vh;
-        // width: 100vw;
-        // top:0;
-        // left:0;
+        position:fixed;
+        margin:0;
+        height:100vh;
+        width: 100vw;
+        top:0;
+        left:0;
         h1{
             // position: absolute;
             top:50px;
