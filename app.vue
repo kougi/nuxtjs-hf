@@ -6,7 +6,6 @@
 			<div id="content">
         <TheHero />
         <!-- <div class="below-fold"> -->
-          <p><b>DEBUG: </b> The window width and height are respectively {{width}}, {{height}}</p>
           <TheSlider />
           <NewsletterSubscribe />
           <TheFooter />
@@ -14,7 +13,7 @@
      </div>
     </div>
 
-    <div id="cursor-swiper"></div>
+    <div id="cursor-swiper"><div id="cursor-text" /></div>
     <a href="#subscribe" id="stay-updated" class="anchor">Stay Updated</a>
 
 </template>
@@ -68,7 +67,32 @@ data() {
     
     //Add smooth scrolling the website
     smoothScroll("#content");
-      
+    
+
+    // Create the Stay update button's timeline]
+      //Handle the STAY UPDATED stickiness
+    //Create another GSAP timeline to handle this event
+    let stayUpdatedButton = gsap.timeline({
+      scrollTrigger: {
+          trigger: '.newsletter',
+          start: 'top 100%-=40', // which means "when the top of the trigger hits 40px above the bottom of the viewport
+        // end: 'bottom 50%',
+          toggleActions: "play none none reset",
+          markers: false,
+        },
+    });
+    //
+    stayUpdatedButton
+      .to('#stay-updated', {
+        //Change the positioning once it collides with the newsletter subscribe form
+        position:'absolute'
+      }, "0")
+      .to('h2#subscribe', {
+        // opacity:1,
+        visibility: 'visible',
+      }, "0");
+
+    
     // Check if link is an anchor link to the same page.
     function getSamePageAnchor (link) {
       if (
@@ -83,6 +107,12 @@ data() {
       return link.hash;
     }
 
+
+    //Determine the header's height by getting the CSS variable and then stripping the string of px
+    var headerHeight = window.getComputedStyle(document.documentElement).getPropertyValue('--header-height');
+    //remove the px from the returned value
+    var headerHeightOffset = (Number(headerHeight.replace('px', '')));
+    
     // Scroll to a given hash, preventing the event given if there is one
     function scrollToHash(hash, e) {
       const elem = hash ? document.querySelector(hash) : false;
@@ -188,13 +218,13 @@ data() {
    unmounted() {
     window.removeEventListener('resize', this.resizeHandler);
   },
+  
   methods: {
     resizeHandler(e)  {
         this.height =  window.innerHeight;
         this.width =  window.innerWidth;
 
         // Actions on resize
-        // let logoTimeline = 0;
         //Update height of the header to match the CSS variable
         var headerHeight = window.getComputedStyle(document.documentElement).getPropertyValue('--header-height');
         //remove the px from the returned value
@@ -229,7 +259,6 @@ data() {
          }else{
           console.log("resized")
           logoTimeline.kill()
-          stayUpdatedButton.kill()
          }
 
   
@@ -269,34 +298,41 @@ data() {
       ;
 
 
-          //Handle the STAY UPDATED stickiness
-        //Create another GSAP timeline to handle this event
-        let stayUpdatedButton = gsap.timeline({
-          scrollTrigger: {
-              trigger: '.newsletter',
-              start: 'top 100%-=40', // which means "when the top of the trigger hits 40px above the bottom of the viewport
-            // end: 'bottom 50%',
-              toggleActions: "play none none reset",
-              markers: false,
-            },
-        });
-        stayUpdatedButton
-          .to('#stay-updated', {
-            //Change the positioning once it collides with the newsletter subscribe form
-            position:'absolute'
-          }, "0")
-          .to('h2#subscribe', {
-            // opacity:1,
-            visibility: 'visible',
-          }, "0");
+        //   //Handle the STAY UPDATED stickiness
+        // //Create another GSAP timeline to handle this event
+        // let stayUpdatedButton = gsap.timeline({
+        //   scrollTrigger: {
+        //       trigger: '.newsletter',
+        //       start: 'top 100%-=40', // which means "when the top of the trigger hits 40px above the bottom of the viewport
+        //     // end: 'bottom 50%',
+        //       toggleActions: "play none none reset",
+        //       markers: false,
+        //     },
+        // });
+        // //
+        // stayUpdatedButton
+        //   .to('#stay-updated', {
+        //     //Change the positioning once it collides with the newsletter subscribe form
+        //     position:'absolute'
+        //   }, "0")
+        //   .to('h2#subscribe', {
+        //     // opacity:1,
+        //     visibility: 'visible',
+        //   }, "0");
 
 
-          // Resize carousel buttons
+
+          // Resize carousel buttons. use a timer as as otherwise it uses the previous size of the window.
           let prevButton = document.querySelector('.swiper-button-prev');
           let nextButton = document.querySelector('.swiper-button-next');
-          var swiperHeight = document.querySelector(".swiper figure>img").offsetHeight;
-          prevButton.style.height = `${swiperHeight}px`;
-          nextButton.style.height = `${swiperHeight}px`;
+          let swiperHeight = document.querySelector(".swiper figure>img").offsetHeight;
+          setTimeout(function(){
+           
+            console.log("Swiper height: "+swiperHeight+"")
+            prevButton.style.height = `${swiperHeight}px`;
+            nextButton.style.height = `${swiperHeight}px`;
+            }, 500);
+          
 
       },
   },

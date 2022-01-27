@@ -142,13 +142,20 @@ aside.company-details{
     position: absolute;
     top: 5px;
     transform-origin: left;
+    
 
     // To prevent logo jankiness on initial load
     transform: scale(3) translatey(100vh);
-    opacity:0;
+    // opacity:0;
 
     img{
+        opacity:0;
         max-width: 80px;
+        animation: fadeIn 3s;
+        animation-delay: 300ms;
+        // animation-iteration-count: 1;
+        transition-timing-function: cubic-bezier(0.550, 0.085, 0.680, 0.530);
+        animation-fill-mode: forwards;
     }
 }
 
@@ -276,7 +283,6 @@ aside.company-details{
         // padding-right: 110px;
 
         a{
-            display: inline-block;
         }
     }
     .contact-container{
@@ -324,8 +330,9 @@ aside.company-details{
     }
 
 .contact{
+    // flex-basis:50%;
     a{display: block;}
-    //Use CSS for Enquiries columns
+    //CSS for Enquiries columns
     // Enquiries container
     >div{
         // columns: auto;
@@ -335,6 +342,7 @@ aside.company-details{
         .col{
             display: flex;
             flex-direction: column;
+            // flex-basis:50%;
             // padding: 0 40px 0 0;
             &:nth-child(1){
                 padding-right:40px;

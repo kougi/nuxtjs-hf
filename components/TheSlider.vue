@@ -32,12 +32,6 @@
                 <!-- Only load the additional information if it's enabled in the data/backend -->
                 <template v-if="slide.moreInfo === 1">
                     <details>
-                        <summary>
-                            <div class="button open">Read More</div> 
-                            <div class="button close">Hide Text</div>
-                            <!-- <button @click="toggle">{{buttonToggle ? 'Read More' : 'Hide Text'}}</button> -->
-                        </summary>
-
                         <div class="row">
                             <div class="col-xs-12 col-md-6">
                                 Location: [{{slide.location}}]
@@ -54,6 +48,12 @@
                                 </p>
                             </div>
                         </div>
+
+                        <summary>
+                            <div class="button open">Read More</div> 
+                            <div class="button close">Hide Text</div>
+                            <!-- <button @click="toggle">{{buttonToggle ? 'Read More' : 'Hide Text'}}</button> -->
+                        </summary>
                     </details>
                 </template>
 
@@ -143,10 +143,13 @@
       };
 
       const onSlideChange = () => {
-        console.log('slide change');
+        
+        // console.log('slide change');
         //When the slide is changed, check if the <details> panel is open on the slideshow and close it if it is.
         document.body.querySelectorAll('details').forEach((e) => (e.hasAttribute('open')) ? e.removeAttribute('open') : e.setAttribute('close',false))
       };
+      
+
       return {
         onSwiper,
         onSlideChange,
@@ -155,7 +158,9 @@
     },
     mounted() {
 
-
+        //Open a <details> on page load  so that it adds the correct height to the page with GSAP's smooth scroll
+        // document.body.querySelectorAll('details').forEach((e) => (e.hasAttribute('open')) ? e.removeAttribute('open') : e.setAttribute('open',false))
+        
         //Make custom cursor when hovering over carousel.
         https://codepen.io/GreenSock/pen/WNNNBpo
         gsap.set("#cursor-swiper", {xPercent: -50, yPercent: -50});
@@ -202,37 +207,56 @@
 
         
 
+
+
         // Test whether the cursor should be set to Next or Previous depending on side being hovered.
         let prevButton = document.querySelector('.swiper-button-prev');
         let nextButton = document.querySelector('.swiper-button-next');
+        //Define the container for the cursor's text
+        let cursorContainer = document.getElementById("cursor-text");
 
         // Give appropriate height to Swiper's next/previous buttons so that they match the height of an image in the carousel.
-        // document.getElementById("myImg").style.height
         var swiperHeight = document.querySelector(".swiper figure>img").offsetHeight;
         prevButton.style.height = `${swiperHeight}px`;
         nextButton.style.height = `${swiperHeight}px`;
-        // console.log(swiperHeight);
 
-        //Change the cursor to "Next" (Will try replace .svg with plain text)
+        //Change the cursor to "Next" 
         nextButton.addEventListener("mouseenter", function( event ) {
-        cursor.innerHTML = "Next";
-        console.log('next');
+            cursorContainer.innerHTML = "Next";
+            console.log('next');
         }, false);
 
         //Change the cursor to "Previous"
         prevButton.addEventListener("mouseenter", function( event ) {
-        cursor.innerHTML = "Previous";
-        console.log('previous');
+            cursorContainer.innerHTML = "Previous";
+            console.log('previous');
         }, false);
 
         //Hide cursor when hovering over figure caption (office information)
         document.querySelectorAll('figcaption').forEach(fig => {
             fig.addEventListener('mouseover', () => {
-                // cursor.style.backgroundImage = "unset";
-                cursor.innerHTML = "";
+                cursorContainer.innerHTML = "";
             });
         });
 
+        // Play animation when clicking navigation directions
+        // Bounce effect on click
+        // Next button
+        nextButton.addEventListener("click", function( event ) {
+            cursorContainer.classList.add("next-button-animation");
+            setTimeout(function(){
+                cursorContainer.classList.remove("next-button-animation");
+            }, 300);
+        }, false);
+        // Previous button
+        prevButton.addEventListener("click", function( event ) {
+            cursorContainer.classList.add("prev-button-animation");
+            setTimeout(function(){
+                cursorContainer.classList.remove("prev-button-animation");
+            }, 300);
+        }, false);
+
+        
 
 
 
@@ -268,6 +292,33 @@
 
     /* Run it */
     setDetailsHeight('details');
+  
+        
+
+    //Change the size of the viewport when the <details> is expanded (Attempt to fix bug where content is pushed beyond the bottom of the screen)
+    document.querySelectorAll('details').forEach(details => {
+
+    details.addEventListener("toggle", event => {
+        const expandedHeight =
+        getComputedStyle(document.querySelector('details'))
+        .getPropertyValue('--expanded');
+            // var expandedHeight = getComputedStyle(details).details.getPropertyValue('--expanded');
+            if (details.open) {
+                /* the element was toggled open */
+                console.log('OPEN' + expandedHeight +'');
+                document.getElementById("viewport").style.paddingBottom=`${expandedHeight}`;
+            } else {
+                /* the element was toggled closed */
+                console.log('Close');
+                document.getElementById("viewport").style.paddingBottom=`0`;
+            }
+            
+        });
+
+
+    })
+
+
     }, //mounted
 
    
@@ -303,18 +354,20 @@
             >div{
                 padding: 0.7em 0;
             }
-            >div:not(.col-md-offset-6), &:last-child{
+            >div:not(.col-md-offset-6){
                 border-bottom:solid 1px var(--font-color);
             }
-            // &:last-child:before {
-            //     background: #736457;
-            //     content: '';
-            //     position: absolute;
-            //     left: 0;
-            //     right: 0;
-            //     bottom: 1px;
-            //     height: 1px;
-            // }
+
+        
+            &:last-child:before {
+                background: #736457;
+                content: '';
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 1px;
+                height: 1px;
+            }
            
         }
         &.no-info{
@@ -333,14 +386,28 @@
                 }
             }
         }
+
+        //Hide underline on first row of Carousel information
+        >div.row{
+            &:first-child>div{
+                // border-bottom-color: transparent;
+            }
+        }
     }
     //Toggle visibility of info on the carousel when opened.
     details{
         position:relative;
+        border-bottom: solid 1px var(--font-color);
+        top: -1px;
         summary{
             display:block;
+            // background:red;
             cursor: pointer;
-
+            div.button{
+                &:before{
+                    display: none;
+                }
+            }
             // border-top: solid 1px var(--font-color);
             margin-top: -1px;
             // position: relative;
@@ -354,27 +421,6 @@
             margin-top: 15px;
         }
 
-        //When details is opened
-        // &[open]{
-        //     display:block;
-        //     padding-top:0;
-        //     animation: open .2s linear;
-        //     padding-bottom: 60px;
-            
-        //     summary{
-        //         position:absolute;
-        //         bottom: 0;
-        //         left:0;
-        //         border:unset;
-        //     }
-        //     //buttons
-        //     .open{
-        //         display: none;
-        //     }
-        //     .close{
-        //         display: block;
-        //     }
-        // }
     }
     
 }
@@ -590,14 +636,9 @@ details {
             &:before{transform: translateY(var(--m)) rotate(45deg);}
             &:after{transform: translateY(calc(0px - var(--m))) rotate(-45deg); }
         }
-        // [open] > summary > [data-css-icon*="menu"] i { background-color: transparent; }
-        // [open] > summary > [data-css-icon*="menu"] i::after { transform: translateY(calc(0px - var(--m))) rotate(-45deg); }
-        // [open] > summary > [data-css-icon*="menu"] i::before { transform: translateY(var(--m)) rotate(45deg); }
     }
 }
 
-
- /* For this demo only */
     // button, details { width: 25rem; }
     // button { font-family: inherit; font-size: inherit; }
     details {
@@ -605,8 +646,22 @@ details {
         // overflow: hidden;
         transition: height 300ms cubic-bezier(0.4, 0.01, 0.165, 0.99);
 
+        //When <details> is opened
+        div.row{
+            >div{
+            opacity: 0;
+            transition: opacity 1s ease-in !important;
+            }
+        }
         &[open]{
             height: var(--expanded);
+            div.row{
+                >div{
+                opacity: 1;
+                 transition: opacity 1s ease-in !important;
+                // transition-delay: 300ms;
+                }
+            }
 
             .open{
                 display: none;
@@ -642,5 +697,9 @@ details {
     summary::marker { display: none; }
     summary::-webkit-details-marker { display: none; }
 
+
+// .carousel figcaption > div.row:first-child > div {
+//     border-bottom-color: transparent;
+// }
 
 </style>

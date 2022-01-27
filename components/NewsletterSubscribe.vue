@@ -152,9 +152,19 @@ input[type=submit]{
         form input:not([type=submit]),h3{
             // text-indent: -5px;
             margin-left: -5px;
+            margin-bottom: 0;
+        }
+        form input:not([type=submit]) {
+             margin-top: -10px;
+
         }
     }
+
+    #stay-updated{
+        display: none;
+    }
     
+
 }
 /* Medium and up */
 @media (min-width: $mobile-breakpoint) {

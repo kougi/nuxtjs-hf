@@ -188,7 +188,7 @@ a, div.button{
 
 // Transitions:
 a, input, .button{
-    transition: opacity 400ms cubic-bezier(.104,.204,.492,1);
+    transition: all 400ms cubic-bezier(.104,.204,.492,1);
   }
   
   .button,input[type="submit"]{
@@ -263,3 +263,4 @@ ul{
 		Letter-spacing: -0.045em;
 	}
 }
+
