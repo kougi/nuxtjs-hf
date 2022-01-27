@@ -1,6 +1,6 @@
 const client_manifest = {
   "node_modules/nuxt3/dist/app/entry.mjs": {
-    "file": "entry-84b60026.mjs",
+    "file": "entry-f9cfd047.mjs",
     "src": "node_modules/nuxt3/dist/app/entry.mjs",
     "isEntry": true,
     "dynamicImports": [
@@ -8,15 +8,16 @@ const client_manifest = {
     ]
   },
   "node_modules/nuxt3/dist/app/bootstrap.mjs": {
-    "file": "bootstrap-8f1a7532.mjs",
+    "file": "bootstrap-3a0682c4.mjs",
     "src": "node_modules/nuxt3/dist/app/bootstrap.mjs",
     "isDynamicEntry": true,
     "css": [
-      "assets/bootstrap.664808d4.css"
+      "bootstrap.4d41fff4.css"
     ],
     "assets": [
-      "assets/MessinaSansWeb-Regular.007a0750.woff",
-      "assets/MessinaSansWeb-Regular.af35c44f.woff2"
+      "txo_logo.d1de97a4.svg",
+      "thirdway.28d78779.svg",
+      "MessinaSansWeb-Regular.af35c44f.woff2"
     ]
   }
 };

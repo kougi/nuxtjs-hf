@@ -1,24 +1,13 @@
-import destr from 'destr';
-import defu from 'defu';
-
-const _runtimeConfig = {public:{app:{basePath:"\u002F",assetsPath:"\u002F_nuxt\u002F",cdnURL:null}},private:{}};
-for (const type of ["private", "public"]) {
-  for (const key in _runtimeConfig[type]) {
-    _runtimeConfig[type][key] = destr(process.env[key] || _runtimeConfig[type][key]);
-  }
-}
-const privateConfig = deepFreeze(defu(_runtimeConfig.private, _runtimeConfig.public));
-const publicConfig = deepFreeze(_runtimeConfig.public);
-function deepFreeze(object) {
-  const propNames = Object.getOwnPropertyNames(object);
-  for (const name of propNames) {
-    const value = object[name];
-    if (value && typeof value === "object") {
-      deepFreeze(value);
-    }
-  }
-  return Object.freeze(object);
-}
+import { p as privateConfig, a as publicConfig, b as buildAssetsURL } from './server.mjs';
+import 'unenv/runtime/polyfill/fetch.node';
+import 'http';
+import 'https';
+import 'destr';
+import 'h3';
+import 'ohmyfetch';
+import 'unenv/runtime/fetch/index';
+import 'ufo';
+import 'defu';
 
 const IS_JS_RE = /\.[cm]?js(\?[^.]+)?$/;
 const IS_MODULE_RE = /\.mjs(\?[^.]+)?$/;
@@ -192,7 +181,6 @@ function getModuleDependencies(id, rendererContext) {
   return dependencies;
 }
 function getAllDependencies(ids, rendererContext) {
-  var _a;
   const cacheKey = Array.from(ids).join(",");
   if (rendererContext._dependencySets[cacheKey]) {
     return rendererContext._dependencySets[cacheKey];
@@ -209,7 +197,7 @@ function getAllDependencies(ids, rendererContext) {
     Object.assign(allDeps.styles, deps.styles);
     Object.assign(allDeps.preload, deps.preload);
     Object.assign(allDeps.prefetch, deps.prefetch);
-    for (const dynamicDepId of ((_a = rendererContext.clientManifest[id]) == null ? void 0 : _a.dynamicImports) || []) {
+    for (const dynamicDepId of rendererContext.clientManifest[id]?.dynamicImports || []) {
       const dynamicDeps = getModuleDependencies(dynamicDepId, rendererContext);
       Object.assign(allDeps.prefetch, dynamicDeps.scripts);
       Object.assign(allDeps.prefetch, dynamicDeps.styles);
@@ -255,7 +243,7 @@ function renderPreloadLinks(ssrContext, rendererContext) {
 }
 function renderPrefetchLinks(ssrContext, rendererContext) {
   const { prefetch } = getRequestDependencies(ssrContext, rendererContext);
-  return Object.values(prefetch).map(({ path }) => `<link ${isModule(path) ? 'type="module" ' : ""}rel="prefetch" href="${rendererContext.publicPath}${path}">`).join("");
+  return Object.values(prefetch).map(({ path }) => `<link ${isModule(path) ? 'type="module" ' : ""}rel="prefetch${isCSS(path) ? " stylesheet" : ""}" href="${rendererContext.publicPath}${path}">`).join("");
 }
 function renderScripts(ssrContext, rendererContext) {
   const { scripts } = getRequestDependencies(ssrContext, rendererContext);
@@ -265,7 +253,7 @@ function createRenderer(createApp, renderOptions) {
   const rendererContext = createRendererContext(renderOptions);
   return {
     async renderToString(ssrContext) {
-      ssrContext._registeredComponents = ssrContext._registeredComponents || new Set();
+      ssrContext._registeredComponents = ssrContext._registeredComponents || /* @__PURE__ */ new Set();
       const _createApp = await Promise.resolve(createApp).then((r) => r.default || r);
       const app = await _createApp(ssrContext);
       const html = await renderOptions.renderToString(app, ssrContext);
@@ -527,11 +515,10 @@ const htmlTemplate = (params) => `<!DOCTYPE html>
 </html>
 `;
 
-const STATIC_ASSETS_BASE = "E:/server/wampstack-7.4.16-0/apache2/htdocs/nuxtjs-hf/dist" + "/" + "1642968489";
+const STATIC_ASSETS_BASE = "/_nuxt/E:/server/wampstack-7.4.16-0/apache2/htdocs/nuxtjs-hf/dist" + "/" + "1643277380";
 const PAYLOAD_JS = "/payload.js";
 const getClientManifest = cachedImport(() => import('./client.manifest.mjs'));
-const getSSRApp = cachedImport(() => import('./server.mjs'));
-const publicPath = publicConfig.app && publicConfig.app.assetsPath || "/_nuxt/" || "/_nuxt";
+const getSSRApp = cachedImport(() => import('./server2.mjs'));
 const getSSRRenderer = cachedResult(async () => {
   const clientManifest = await getClientManifest();
   if (!clientManifest) {
@@ -542,7 +529,7 @@ const getSSRRenderer = cachedResult(async () => {
     throw new Error("Server bundle is not available");
   }
   const { renderToString: renderToString2 } = await import('./vue3.mjs');
-  return createRenderer(createSSRApp, { clientManifest, renderToString: renderToString2, publicPath }).renderToString;
+  return createRenderer(createSSRApp, { clientManifest, renderToString: renderToString2, publicPath: buildAssetsURL() }).renderToString;
 });
 const getSPARenderer = cachedResult(async () => {
   const clientManifest = await getClientManifest();
@@ -558,10 +545,10 @@ const getSPARenderer = cachedResult(async () => {
     return {
       html: '<div id="__nuxt"></div>',
       renderResourceHints: () => "",
-      renderStyles: () => entryFiles.flatMap(({ css }) => css).filter((css) => css != null).map((file) => `<link rel="stylesheet" href="${publicPath}${file}">`).join(""),
+      renderStyles: () => entryFiles.flatMap(({ css }) => css).filter((css) => css != null).map((file) => `<link rel="stylesheet" href="${buildAssetsURL(file)}">`).join(""),
       renderScripts: () => entryFiles.map(({ file }) => {
         const isMJS = !file.endsWith(".js");
-        return `<script ${isMJS ? 'type="module"' : ""} src="${publicPath}${file}"><\/script>`;
+        return `<script ${isMJS ? 'type="module"' : ""} src="${buildAssetsURL(file)}"><\/script>`;
       }).join("")
     };
   };
@@ -575,7 +562,7 @@ async function renderMiddleware(req, res) {
   let isPayloadReq = false;
   if (url.startsWith(STATIC_ASSETS_BASE) && url.endsWith(PAYLOAD_JS)) {
     isPayloadReq = true;
-    url = url.substr(STATIC_ASSETS_BASE.length, url.length - STATIC_ASSETS_BASE.length - PAYLOAD_JS.length) || "/";
+    url = url.slice(STATIC_ASSETS_BASE.length, url.length - PAYLOAD_JS.length) || "/";
   }
   const ssrContext = {
     url,

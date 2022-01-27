@@ -1,0 +1,104 @@
+;
+// CSS Variables (Using mobile for deaults)
+:root {
+    --font-color: #736357;
+    --background-color: #f9f5ef;
+    --header-height: 60px;
+
+    --site-padding: 15px;
+
+    --fs-hero-text: 72px;
+    --fs-annotation-text: 18px;
+    --fs-navigation-text: 10px;
+
+
+    // Text sizing
+  }
+
+  // Mobile specific
+  // @media (max-width: 39.9375em) 
+  @media (max-width: $medium-breakpoint) 
+  {
+    :root{
+        // --header-height: 60px;
+    }
+  }
+
+  /* Medium and up (Tablets/desktop) */
+@media (min-width: $mobile-breakpoint) {
+
+  :root{
+    --header-height: 120px;
+    --site-padding: 40px;
+
+    --fs-hero-text: 144px;
+    --fs-annotation-text: 45px;
+    --fs-navigation-text: 16px;
+  }
+}
+
+// for tablets/mobile in Landscape 
+@media (orientation: landscape) and (max-width: 50em) {
+  :root{
+    --header-height: 60px;}
+}
+
+  
+  
+  //Only show focus effect when the user is using keyboard. Don't show when clicking on element.
+  :focus-visible {
+    outline: 1px dashed var(--font-color);
+  }
+    
+  /* Focusing the button with a mouse, touch, or stylus will show a subtle drop shadow. */
+  :focus:not(:focus-visible) {
+    outline: none;
+  
+  }
+  
+  
+  // Change the scrollbar colour to match the website's colour scheme.
+  ::-webkit-scrollbar {
+    width: 10px;
+    // border-radius:10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    // background: #f1f1f1;
+    // background: #528095;
+    background:var(--background-color);;
+    // border-radius:10px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    // background: #888;
+    // background: #f9c985;
+    background: var(--font-color);
+    // border-radius:10px;
+    // outline: 1px solid slategrey;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    // background: #555;
+    background: #5f4939;
+  }
+  ::-webkit-scrollbar-thumb:active{
+    background: #ac8262;
+    // border-left:solid 2px #4a321f;;
+    // box-shadow: 0px 0px 6px 2px blue;
+  }
+  
+  
+
+  // Animations
+  @keyframes fadeIn{
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
