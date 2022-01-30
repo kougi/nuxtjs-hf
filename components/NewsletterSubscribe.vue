@@ -222,11 +222,16 @@ section.newsletter {
 				opacity: 1;
 			}
 		}
+		// Red underline if form field invalid
+		input.required{
+				text-decoration: underline 3px red ;
+			}
 		label {
 			display: none;
 		}
 	}
 }
+
 
 section.newsletter h2, #stay-updated {
 	font-size: 1.2em;
@@ -288,7 +293,7 @@ input[type="submit"] {
 	section.newsletter {
 		padding-bottom: 20em;
 		margin-top: 1em;
-
+		min-height:100vh;
 		h2#subscribe {
 			visibility: visible;
 		}
@@ -333,10 +338,6 @@ input[type="submit"] {
 			// Inputs which aren't the submit button
 			input:not([type="submit"]) {
 				height: 168px;
-			}
-
-			input.required{
-				text-decoration: underline 3px red ;
 			}
 		}
 		form input:not([type="submit"]),

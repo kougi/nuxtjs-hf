@@ -86,7 +86,7 @@ export default {
                     trigger: ".hero-headline",
                     pin: true,
                     start: () => `top top+=${headerHeightOffset}`,
-                    end: "+=300",
+                    end: "+=450",
                     // scrub: true
                 },
                 // background: ''

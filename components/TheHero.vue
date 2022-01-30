@@ -80,6 +80,9 @@ section.hero {
 	section.hero {
 		// padding: var(--header-height) var(--site-padding) 0 var(--site-padding);
 		margin-bottom: 1.5em;
+        h2{
+            margin-top: 0;
+        }
 	}
 
 	.hero-text-container {
