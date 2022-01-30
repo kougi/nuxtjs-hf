@@ -7,7 +7,7 @@
 
     --site-padding: 15px;
 
-    --fs-hero-text: 72px;
+    --fs-hero-text: 50px;
     --fs-annotation-text: 18px;
     --fs-navigation-text: 10px;
 
@@ -91,7 +91,25 @@
     // box-shadow: 0px 0px 6px 2px blue;
   }
   
-  
+  // Change the color of the text selection for a further customised feel on the website. A small touch
+  ::selection {
+    color: var(--background-color);
+    background: var(--font-color);
+  }
+
+  /* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #736357;
+    -webkit-box-shadow: 0 0 0px 1000px #f9eedc inset;
+}
 
   // Animations
   @keyframes fadeIn{
@@ -156,4 +174,17 @@
     animation: prevButton 0.3s;
       transition-timing-function: cubic-bezier(0.550, 0.085, 0.680, 0.530);
       animation-fill-mode: forwards;
+  }
+
+  // .fade-in-element { animation-name: fadeIn; animation-duration:1s; }
+
+  .fade-in .row { 
+    animation: fadeIn 1s ease-in 1 forwards;
+    &:nth-child(2){
+      // animation-delay: 200ms;
+    }
+  }
+
+  .logo-container .fade-in{
+    animation: fadeIn 1.5s ease-in 1 forwards;
   }

@@ -1,6 +1,6 @@
 <!-- Page footer -->
 <template>
-    <footer>
+    <footer id="site-footer">
         <div class="row">
             <div class="col-xs-12 col-md-6">
                 <a href="#">
@@ -21,9 +21,51 @@
 </template>
 
 <script>
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 export default {
   name: 'TheFooter',
+
+created() {
+    // Register GSAP ScrollTrigger plugin
+    gsap.registerPlugin(ScrollTrigger);
+  },
+  mounted(){
+
+    gsap.set('footer#site-footer', {
+        yPercent: 100,
+        y: 0
+    });
+    gsap
+    .timeline({
+        scrollTrigger: {
+        trigger: '.newsletter',
+        // start: 'bottom bottom',
+        // start: 'top-=400 top',
+        start: 'bottom-=30 bottom ',
+        end: () => `bottom bottom`,
+        // markers: true,
+        // scrub: true,
+        toggleActions: 'play none reverse none'
+        }
+    })
+    .to('footer#site-footer', {
+        yPercent: 0,
+        duration: 0.4
+    });
+
+  },
+
+        methods: {
+                // bar: function() {
+                //     this.$root.$refs.A.resizeHandler(e);
+                // }
+
+        },
 }
+
+
 </script>
 
 
@@ -32,72 +74,79 @@ export default {
 
 
 
+footer#site-footer {
+	padding: 1em var(--site-padding) 1em var(--site-padding);
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	width: calc(100vw - var(--site-padding));
+	transform: translateY(100%);
 
-footer{
-    padding: 1em 0;
+    nav ul {
+        display: flex;
+        justify-content: space-around;
+        a{
+            display:block;
+        }
+    }
 }
-footer nav ul{
-    display: flex;
-    justify-content: space-around;
-}
-
 
 /* Small/tablets only */
 @media (max-width: $tablet-breakpoint) {
-    footer{
-        padding: 1em 0 1em 0;
-        .logo{
-            max-width:120px;
-            opacity:0.6;
-            margin-bottom:1.4em;
-        }
-        nav.col-xs-12{
-            padding:0;
-            ul{
-                justify-content: flex-start;
-            
-                li{
-                    margin-right:1em;
-                }
-            }
-        }
-    }
+	footer#site-footer {
+		// padding: 1em 0 1em 0;
+		.logo {
+			max-width: 120px;
+			opacity: 0.6;
+			margin-bottom: 1.4em;
+		}
+		nav.col-xs-12 {
+			padding: 0;
+			ul {
+				justify-content: flex-start;
+
+				li {
+					margin-right: 0.7em;
+				}
+			}
+		}
+	}
 }
 
 // A few tweaks specific for tablets
 @media (max-width: $tablet-breakpoint) and (min-width: $mobile-breakpoint) {
+	footer#site-footer {
+		img {
+			display: block;
+			margin: 0 auto;
+		}
+		.logo {
+			max-width: 200px;
+		}
+		a {
+			font-size: 1.4em;
+		}
 
-    footer{
-        img{
-            display: block;
-            margin:0 auto;
-        }
-        .logo{
-             max-width:200px;
-        }
-        a{
-            font-size:1.4em;
-        }
-
-        nav.col-xs-12{
-            ul{
-                justify-content: space-evenly;
-            }
-        }
-    }
+		nav.col-xs-12 {
+			ul {
+				justify-content: space-evenly;
+			}
+		}
+	}
 }
 
 /* Medium and up */
 @media (min-width: $medium-breakpoint) {
-    footer{
-        nav{
-            ul{
-                margin-top: 9px;
-            }
-        }
-        a{
-
-        }
-    }
+	footer#site-footer {
+		nav {
+			ul {
+				margin-top: 9px;
+			}
+		}
+		a {
+		}
+	}
 }
+
 </style>

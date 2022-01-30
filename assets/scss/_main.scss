@@ -6,16 +6,18 @@
 
   /* Global styles for website
   --------------------------------------------- */
-  // html{
-  //   overflow-y:scroll;
-  // }
+  html, body{
+    backface-visibility: hidden;
+      -webkit-overflow-scrolling: touch;
+      // overflow: hidden;
+  }
   body {
       background: var(--background-color);
       //transform-style: preserve-3d;
-      backface-visibility: hidden;
-      // overflow-y:scroll;
-      -webkit-overflow-scrolling: touch;
+      
   }
+
+  // html {margin: 0; height: 100%; overflow: hidden}
   
   // Smooth scrolling
   #viewport {
@@ -35,29 +37,17 @@
     width: 100%;
     padding: 0 10px;
     // Add padding equal to height of the screen so that there's enough blank space to scroll down
-    // padding-top: calc(100vh - 100px);
-    /* set a height because the contents are position: absolute, thus natively there's no height */
-    // height: 2400px;
-    // height: 3400px;
-
-    height: auto;
-    // padding-bottom:110vh;
-    // background: var(--background-color);
     padding: 100vh var(--site-padding) 1vh var(--site-padding);
     
-    // background-image:
-    //   linear-gradient(rgba(255,255,255,.07) 2px, transparent 2px),
-    //   linear-gradient(90deg, rgba(255,255,255,.07) 2px, transparent 2px),
-    //   linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
-    //   linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
-    // background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
-    // background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
     
   }
 
 //   Helpers
 .hidden{
     display: none !important;
+}
+.big{
+  font-size:1.7em;
 }
 /* Typography
 --------------------------------------------- */
@@ -109,7 +99,7 @@ p {
     Font-size: var(--fs-hero-text);
 }
 // Introduction / Annotations / Submit button
-.hero p, .carousel figcaption, input[type="submit"] {
+.hero p, .carousel figcaption, input[type="submit"], .modal {
     Font-size: var(--fs-annotation-text);
 }
 // Navigation/Footer links
@@ -126,6 +116,7 @@ header aside, footer a{
 a {
 	color: var(--font-color);
 	text-decoration: none;
+  -webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
 	// transition: all 0.4s ease-out;
 }
 
@@ -135,26 +126,26 @@ a:visited {
   opacity:0.9;
 }
 
-a:hover,
-a:focus,
-a:active {
+a:hover{
 	// color: var(--font-color);
   color: #ab8a71;
-	opacity:0.8;
+	// opacity:0.8;
 }
 
 a:focus {
 	outline: thin dotted;
 }
 
-a:hover,
-a:active {
-	outline: 0;
+a:active, .button:active, input[type=submit]:active, footer a:active, a img:active
+ {
+	// outline: 0;
+  transform: scale(0.95);
 }
 
 // animated underline effect
-a, div.button{
+div.button{
     position: relative;
+    cursor: pointer;
     &:before{
         content: "";
         transition: transform 0.3s cubic-bezier(0.104, 0.204, 0.492, 1), color 0.6s ease-in;
@@ -181,12 +172,48 @@ a, div.button{
     }
 }
 
+// Animated line from center
+.line{
+  display: block;
+  
+}
+// Add an animated underline to the relevent menus/links
+.line a, ul a, footer a,.logo-container a{   
+  position: relative;
+  // padding: 0.2em 0;
+  &:after{
+    content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: var(--font-color);
+      opacity: 0;
+      transition: opacity 300ms, transform 300ms;
+
+      opacity: 1;
+    transform: scale(0);
+    transform-origin: center;
+  }
+
+  &:focus, &:hover{
+    &:after{
+      transform: scale(1);
+    }
+  }
+}
 
 // Transitions:
-a, input, .button{
+a, input, .button {
     transition: all 400ms cubic-bezier(.104,.204,.492,1);
   }
   
+  // animate image links on click
+  a img{
+    transition: all 100ms cubic-bezier(.104,.204,.492,1);
+  }
+
   .button,input[type="submit"]{
         opacity: 0.3;
           &:hover{
@@ -212,6 +239,8 @@ ul{
 
 
 
+
+
 // Media queries 
 /* Small only */
 @media (max-width: 39.9375em) {
@@ -220,7 +249,8 @@ ul{
     // Typography for mobile
     // Hero text / Form inputs
 	.hero h1, form input, form h3{
-		Line-height: 69px;
+		// Line-height: 69px;
+    Line-height: 51px;
 		Letter-spacing: -0.05em;
 	}
 	// Introduction / Annotations / Submit button
@@ -249,7 +279,7 @@ ul{
 		
 	}
 	// Introduction / Annotations / Submit button
-	.hero p, .carousel figcaption, input[type="submit"], form h3 {
+	.hero p, .carousel figcaption, input[type="submit"], form h3, .modal {
 		Line-height: 45px;
 		Letter-spacing: 0em;
 	}
