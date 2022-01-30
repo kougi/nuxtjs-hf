@@ -293,7 +293,7 @@ input[type="submit"] {
 	section.newsletter {
 		padding-bottom: 20em;
 		margin-top: 1em;
-		min-height:100vh;
+		// min-height:100vh;
 		h2#subscribe {
 			visibility: visible;
 		}
