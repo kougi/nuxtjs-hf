@@ -16,9 +16,7 @@
                 </ul>
             </div>
             </template>
-
-<!-- class="gs_reveal gs_reveal_fromLeft" -->
-
+			<!-- Form rows. gs_reveal causes an animation only on desktop. -->
 			<div class="form-row gs_reveal gs_reveal_fromLeft">
 				<label for="fname">Full Name</label>
 				<input type="text" id="fname" name="fname" v-model="fullName" placeholder="Full Name" maxlength="25" >
@@ -45,49 +43,39 @@
         </form>
     </section>
 
-
+	<!-- Modal window for confirming form details when submitted -->
     <SubscribtionModal
-  v-show="isModalVisible"
-  @close="closeModal"
->
-  <template v-slot:header>
-    Thank you for your interest,<br>
-    <strong>{{ fullName }}</strong>.
-  </template>
+  	v-show="isModalVisible"
+  	@close="closeModal"
+	>
+		<template v-slot:header>
+			Thank you for your interest,<br>
+			<strong>{{ fullName }}</strong>.
+		</template>
 
-  <template v-slot:body>
-    We'll keep you updated at: <br>
-    <em>{{ emailAddress }}</em>
-  </template>
+		<template v-slot:body>
+			We'll keep you updated at: <br>
+			<em>{{ emailAddress }}</em>
+		</template>
 
-  <template v-slot:footer>
-      <!-- Check if company name was entered -->
-      <template v-if="companyName">
-         We look forward to working with<br>
-         <strong>{{companyName}}</strong><br>
-         in the future
-      </template>
-      <!-- No office. Leaving blank, but could be personalised message too -->
-       <template v-else>
-        <br>
-        </template>
-    <!-- This is a new modal footer. -->
-  </template>
+		<template v-slot:footer>
+			<!-- Check if company name was entered -->
+			<template v-if="companyName">
+				We look forward to working with<br>
+				<strong>{{companyName}}</strong><br>
+				in the future
+			</template>
+			<!-- No company name entered. Leaving blank, but could be personalised message too -->
+			<template v-else>
+				<br>
+				</template>
+			<!-- This is a new modal footer. -->
+		</template>
 </SubscribtionModal>
 
 </template>
 
 <script>
-
-// import { gsap } from "gsap";
-// import { ScrollTrigger } from "gsap/ScrollTrigger";
-// import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-// import { defineEmit } from 'vue'
-// const emit = defineEmit(['selected'])
-// const onEmit = (data) => console.log(data)
-// import SubscribtionModal from "./SubscribtionModal.vue";
-//    v-show="showModal" 
-
 export default {
   name: 'NewsletterSubscribe',
 
@@ -108,15 +96,19 @@ export default {
     },
 
   mounted(){
-      document.body.appendChild(document.querySelector('.modal-backdrop'));
-  },
+	//Move the modal container to the body, so that the Fixed positioning works correctly   
+    document.body.appendChild(document.querySelector('.modal-backdrop'));
+	//Close <details> if it's open when the user clicks on an <input>
+	var inputs = document.querySelectorAll('section.newsletter input');
+	for(var i=0,len=inputs.length;i<len;i++){
+		inputs[i].addEventListener('focus',function(){
+			document.body.querySelectorAll('details').forEach((e) => (e.hasAttribute('open')) ? e.removeAttribute('open') : e.setAttribute('close', false))
+		})
+	}
+
+  }, //mounted
 
  methods: {
-     //Prevent default when the form is submitted, so that we can show a modal window with a confirmation.
-    //  formSubmit() {
-    //   console.log('form submitted');
-    // },
-
     //Check if all fields of the form have been filled out, if they have, show a modal window with a confirmation
     checkForm(){
         //Are fields filled out?
@@ -127,6 +119,7 @@ export default {
             //Hide errors if form is valid
             this.errors = [];
 
+			//If the form goes through correctly, remove the "required" red underline class on the <input>s
 			document.querySelector("#fname").classList.remove("required");
 			document.querySelector("#email").classList.remove("required");
             return true;
@@ -152,15 +145,15 @@ export default {
         // e.preventDefault();
     },
 
-    //Functions for showing/hiding the form submit modal.
-      showModal() {
-        this.isModalVisible = true;
-        console.log('show modal')
-      },
-      closeModal() {
-        this.isModalVisible = false;
-        console.log('hide modal')
-      }
+		//Functions for showing/hiding the form submit modal.
+		showModal() {
+			this.isModalVisible = true;
+			console.log('show modal')
+		},
+		closeModal() {
+			this.isModalVisible = false;
+			console.log('hide modal')
+		}
 
     }
 }
@@ -169,6 +162,12 @@ export default {
 
 
 <style lang="scss">;
+
+
+
+/* Global newsletter form styles
+--------------------------------------------------------------------- */
+
 // Fixed anchor link to jump to newsletter subscribe form
 #stay-updated {
 	position: fixed;
@@ -253,34 +252,18 @@ input[type="submit"] {
 	}
 }
 
-
-// form rows, animated underline when selecting <input>
-.form-row{
-	position: relative;
-	&:before{
-        content: "";
-        transition: transform 0.5s cubic-bezier(0.104, 0.204, 0.492, 1);
-        position: absolute;
-        display: block;
-        height: 1px;
-        background: var(--font-color);
-        bottom: -1px;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        width: 100%;
-        right: 0;
-        transform: scale(0, 1);
-        transform-origin: left;
-    }
-	// Is the <input> inside of the row currently focused? If so, we want an animated underline
-	&:focus-within {
-		&:before{
-				// transform: scale(1,1);
-			}
+// Container for form errors
+.errors-container {
+	ul{
+		padding-top:0.3em;
+	}
+	li {
+		list-style-type: disc;
+		list-style-position: inside;
+		padding-left: 0.5em;
+		font-style: italic;
 	}
 }
-
 
 //Change input placeholder colour.
 ::placeholder {
@@ -288,7 +271,10 @@ input[type="submit"] {
 	opacity: 0.3;
 }
 
-/* Small only */
+//____ End global styles   //________________________________________
+
+/* Small only
+--------------------------------------------------------------------- */
 @media (max-width: $mobile-breakpoint) {
 	section.newsletter {
 		padding-bottom: 20em;
@@ -303,17 +289,14 @@ input[type="submit"] {
 
 		form input:not([type="submit"]),
 		h3 {
-			// text-indent: -5px;
-			margin-left: 0px;
+			margin-left: -3px;
 			margin-bottom: 0;
-			// font-size:2em;
 			font-size:47px;
 			
 		}
 		form input:not([type="submit"]) {
 			    margin-top: 0px;
-				// background: red;
-				margin-top: 5px;
+				line-height: normal;
 				// Limit width of the form Inputs so that it doesn't cause horizontal scrolling
 				max-width: calc(100vw - var(--site-padding) - var(--site-padding));
 		}
@@ -327,7 +310,11 @@ input[type="submit"] {
 		display: none;
 	}
 }
-/* Medium and up */
+
+//____ End small only   //____________________________
+
+/* Medium and up
+--------------------------------------------------------------------- */
 @media (min-width: $mobile-breakpoint) {
 	section.newsletter {
 		h3 {
@@ -354,6 +341,6 @@ input[type="submit"] {
         bottom: 0;
     }
 }
-
+//____ End medium and up  //____________________________
 
 </style>

@@ -14,10 +14,8 @@
   body {
       background: var(--background-color);
       //transform-style: preserve-3d;
-      
   }
 
-  // html {margin: 0; height: 100%; overflow: hidden}
   
   // Smooth scrolling
   #viewport {
@@ -38,6 +36,7 @@
     padding: 0 10px;
     // Add padding equal to height of the screen so that there's enough blank space to scroll down
     padding: 100vh var(--site-padding) 1vh var(--site-padding);
+    // height: 500vh;
     
     
   }

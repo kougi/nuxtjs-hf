@@ -33,6 +33,7 @@ created() {
   },
   mounted(){
 
+    //Animate the footer into view when the user reaches the bottom of the page
     gsap.set('footer#site-footer', {
         yPercent: 100,
         y: 0
@@ -58,14 +59,8 @@ created() {
   },
 
         methods: {
-                // bar: function() {
-                //     this.$root.$refs.A.resizeHandler(e);
-                // }
-
         },
 }
-
-
 </script>
 
 
@@ -73,7 +68,8 @@ created() {
 <style lang="scss">;
 
 
-
+/* General footer styles
+--------------------------------------------------------------------- */
 footer#site-footer {
 	padding: 1em var(--site-padding) 1em var(--site-padding);
 	position: fixed;
@@ -92,7 +88,11 @@ footer#site-footer {
     }
 }
 
-/* Small/tablets only */
+//____ End general styles   //________________________
+
+
+/* Small to tablet sizes
+--------------------------------------------------------------------- */
 @media (max-width: $tablet-breakpoint) {
 	footer#site-footer {
 		// padding: 1em 0 1em 0;
@@ -135,8 +135,11 @@ footer#site-footer {
 		}
 	}
 }
+//____ End mobile styles   //________________________
 
-/* Medium and up */
+
+/* Medium and up
+--------------------------------------------------------------------- */
 @media (min-width: $medium-breakpoint) {
 	footer#site-footer {
 		nav {

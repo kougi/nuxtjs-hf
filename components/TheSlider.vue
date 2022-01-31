@@ -234,13 +234,13 @@
   		//Change the cursor to "Next" 
   		nextButton.addEventListener("mouseenter", function(event) {
   			cursorContainer.innerHTML = "Next";
-  			console.log('next');
+  			// console.log('next');
   		}, false);
 
   		//Change the cursor to "Previous"
   		prevButton.addEventListener("mouseenter", function(event) {
   			cursorContainer.innerHTML = "Previous";
-  			console.log('previous');
+  			// console.log('previous');
   		}, false);
 
   		//Hide cursor when hovering over figure caption (office information)
@@ -299,31 +299,6 @@
 
   		/* Run it */
   		setDetailsHeight('details');
-
-  		//Change the size of the viewport when the <details> is expanded (Attempt to fix bug where content is pushed beyond the bottom of the screen)
-  		document.querySelectorAll('details')
-  		.forEach(details => {
-  			details.addEventListener("toggle", event => {
-  				const expandedHeight = getComputedStyle(document.querySelector('details'))
-  					.getPropertyValue('--expanded');
-  				//Fade in the info when the <details> element is opened. For some strange reason, the CSS selector details[open] doesn't work with transitions/animations for child elements unless dev tools is open, so needed to use js
-  				details.classList.toggle("fade-in");
-  				// Refresh GSAP's height
-  				// this.$root.$refs.A.refreshHeight();
-  				// var expandedHeight = getComputedStyle(details).details.getPropertyValue('--expanded');
-  				if (details.open) {
-  					/* the element was toggled open */
-  					// console.log('OPEN' + expandedHeight + '');
-  					// document.getElementById("viewport").style.paddingBottom = `${expandedHeight}`;
-  					var test = details.getElementsByClassName("row")
-  					console.log(test);
-  				} else {
-  					/* the element was toggled closed */
-  					// console.log('Close');
-  					// document.getElementById("viewport").style.paddingBottom = `0`;
-  				}
-  			});
-  		})
   	}, //mounted
   };
 </script>
@@ -332,7 +307,7 @@
 <style lang="scss">;
 
 /* ---------------------------------------------------------------------
-Global styles for carousel
+  Global styles for carousel
 _______________________________________________________________________*/
 .carousel {
 	overflow: hidden;
@@ -414,7 +389,9 @@ _______________________________________________________________________*/
         // transition: height 300ms cubic-bezier(0.4, 0.01, 0.165, 0.99);
         transition: height 600ms cubic-bezier(.345,.115,.135,1.42);
         // transform 500ms cubic-bezier(.345,.115,.135,1.42),opacity 150ms ease-out,border-color 200ms ease-out
-
+        .row{
+            opacity:0;
+        }
         //Container for the Read More/Hide Text buttons
 		summary {
 			display: block;
@@ -436,7 +413,6 @@ _______________________________________________________________________*/
 			display: none;
 		}
 		.open {
-			margin-top: 15px;
 		}
 
         //The <details> element is toggled open
@@ -458,6 +434,7 @@ _______________________________________________________________________*/
 	}
 }
 
+// Hide defaults
 summary::marker {
 	display: none;
 }
@@ -473,11 +450,26 @@ summary::-webkit-details-marker {
 .swiper-button-next,
 .swiper-button-prev {
 	color: var(--background-color);
+} 
+
+// custom cursor, only visible when hovering over carousel.
+#cursor-swiper {
+	opacity: 0;
+	pointer-events: none;
+	background-size: contain;
+	mix-blend-mode: difference;
+	z-index: 10;
+	position: fixed;
+	top: 0;
+	left: 0;
+	font-size: 3em;
+	color: #fff;
 }
 
-/* ---------------------------------------------------------------------
-Mobile only
-_______________________________________________________________________*/
+//____ End global styles   //__________________________________________
+
+/* Mobile only
+--------------------------------------------------------------------- */
 @media (max-width: $mobile-breakpoint) {
 	:root {
 		--swiper-navigation-size: 20px;
@@ -492,13 +484,11 @@ _______________________________________________________________________*/
 		font-size: 0.4em;
 	}
 
-	.open {
-		margin-top: 10px;
-	}
+
 
 	.carousel {
 		details[open] {
-			padding-bottom: 1.1em;
+			// padding-bottom: 1.1em;
             p{
                 margin: 0;
             }
@@ -512,9 +502,12 @@ _______________________________________________________________________*/
 				}
 			}
 		}
+        details summary{
+            bottom: -1.5em;
+        }
 	}
 }
-//____ End mobile   //___________________________________________________
+//____ End mobile   //________________________
 
 
 /* Large screens (desktop, tablet landscape)
@@ -570,17 +563,5 @@ _______________________________________________________________________*/
 }
 // End large screens
 
-// custom cursor, only visible when hovering over carousel.
-#cursor-swiper {
-	opacity: 0;
-	pointer-events: none;
-	background-size: contain;
-	mix-blend-mode: difference;
-	z-index: 10;
-	position: fixed;
-	top: 0;
-	left: 0;
-	font-size: 3em;
-	color: #fff;
-}
+
 </style>

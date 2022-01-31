@@ -1,68 +1,57 @@
 <template>
-<aside class="col-xs-9 col-md-9 col-lg-6 company-details">
+    <aside class="col-xs-9 col-md-9 col-lg-6 company-details">
+        <!-- Hamburger icon for mobile -->
+        <div class="hamburger">
+            <!-- Uses a checkbox to toggle styles between closed and open -->
+            <input type="checkbox" @click="isOpen = !isOpen"/>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
 
-            <!-- Hamburger icon for mobile -->
-            <div class="hamburger">
-                <!-- Uses a checkbox to toggle styles between closed and open -->
-                <input type="checkbox" @click="isOpen = !isOpen"/>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
 
+        <div 
+            class="contact-container"
+            :class="{hidden: !isOpen}">
+            <div class="contact">
+                <h4>Enquiries</h4>
+                <div>
+                    <!-- 2 columns for the contact info, which are rows on mobile -->
+                    <div class="col">
+                        <h5>General</h5>
+                        <span class="line"><a href="tel:+44002036134733">+44 (0) 020 3613 4733</a></span>
+                        <span class="line"><a href="mailto:info@txowork.com">Info@txowork.com</a></span>
 
-            <div 
-               class="contact-container"
-              :class="{hidden: !isOpen}">
-                <div class="contact">
-                    <h4>Enquiries</h4>
-                    <div>
-                        <!-- 2 columns for the contact info, which are rows on mobile -->
-                        <div class="col">
-                            <h5>General</h5>
-                            <div class="links">
-                                <span class="line"><a href="tel:+44002036134733">+44 (0) 020 3613 4733</a></span>
-                                <span class="line"><a href="mailto:info@txowork.com">Info@txowork.com</a></span>
-                            </div>
-                        </div>
-                        <div class="col">
+                    </div>
+                    <div class="col">
                         <h5>Sales</h5>
                         <span class="line"><a href="tel:+44002036134733">+44 (0) 020 3613 4733</a></span>
                         <span class="line"><a href="mailto:info@txowork.com">Info@txowork.com</a></span>
-                        </div>
                     </div>
                 </div>
-                <address>
-                    <h4>Address</h4>
-                    <p>
-                        Morelands<br>
-                        5-23 Old Street<br>
-                        London EC1V 9HL
-                    </p>
-                </address>
-                <!-- Social media -->
-                <div class="connect">
-                    <h4>Connect</h4>
-                    <ul>
-                        <li><a href="#">Instagram</a></li>
-                        <li><a href="#">LinkedIn</a></li>
-                        <li><a href="#">Facebook</a></li>
-                    </ul>
-                </div>
             </div>
-
-        </aside>
-
-
+            <address>
+                <h4>Address</h4>
+                <p>
+                    Morelands<br>
+                    5-23 Old Street<br>
+                    London EC1V 9HL
+                </p>
+            </address>
+            <!-- Social media -->
+            <div class="connect">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                    <li><a href="#">Facebook</a></li>
+                </ul>
+            </div>
+        </div>
+    </aside>
 </template>
 
 <script>
-
-// import { defineProps } from 'vue'
-//   const props = defineProps({
-//       emit: Function
-//   })
-
   export default {
       name: 'CompanyInfo',
 
@@ -72,9 +61,6 @@
         };
     },
       methods: {
-    //   close() {
-    //     this.$emit('close');
-    //   },
     },
 
 }
@@ -82,8 +68,8 @@
 
 
 <style scoped lang="scss">;
-
-
+/* Global company info styles for header
+--------------------------------------------------------------------- */
 // Contact, Address and menu section in header
 aside.company-details {
 	opacity: 0;
@@ -174,7 +160,10 @@ aside.company-details {
 }
 
 
-/* Small only */
+//____ End global styles   //________________________________________
+
+/* Small only
+--------------------------------------------------------------------- */
 @media (max-width: $mobile-breakpoint) {
     	aside.company-details {
 		h4 {
@@ -223,7 +212,10 @@ aside.company-details {
 	}
 }
 
-/* Medium and up */
+//____ End small only   //________________________________________
+
+/* Medium and up
+--------------------------------------------------------------------- */
 @media (min-width: $medium-breakpoint) {
     // Hide hamburger icon on medium and larger screens
     .hamburger {
@@ -255,5 +247,6 @@ aside.company-details {
 		}
 	}
 }
+//____ End medium and up   //________________________________________
 
 </style>

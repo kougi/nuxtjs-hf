@@ -6,8 +6,6 @@
             <div class="logo-container">
                 <a href="#">
                     <img src="~/assets/img/txo_logo.svg" class="logo" alt="TXO">
-                    <!-- <img src="https://jbeach.xyz/hf-challenge/assets/img/txo_logo.svg" class="logo" alt="TXO"> -->
-                    
                 </a>
             </div>
         </div>
@@ -21,9 +19,6 @@
 </template>
 
 <script>
-
-// import { gsap } from "gsap";
-// import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default {
   name: 'TheHeader',
@@ -41,6 +36,9 @@ export default {
 
 
 <style lang="scss">;
+
+/* General header styles
+--------------------------------------------------------------------- */
 header#site-header {
 	position: fixed;
 	z-index: 2;
@@ -59,9 +57,8 @@ header#site-header {
 	position: absolute;
 	top: 5px;
 	transform-origin: left;
-
 	// To prevent logo jankiness on initial load
-	transform: scale(3) translatey(100vh);
+	// transform: scale(3) translatey(100vh);
 	// opacity:0;
 
 	img {
@@ -69,19 +66,26 @@ header#site-header {
 		max-width: 80px;
 		animation: fadeIn 3s;
 		animation-delay: 300ms;
-		// animation-iteration-count: 1;
+        animation-fill-mode: forwards;
 		transition-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53);
-		animation-fill-mode: forwards;
+		
 	}
 }
 
+//____ End general styles   //________________________
 
-/* Small only */
+
+/* Mobile only
+--------------------------------------------------------------------- */
 @media (max-width: $mobile-breakpoint) {
 
 }
 
-/* Medium and up */
+//____ End mobile styles   //________________________
+
+
+/* Medium and up
+--------------------------------------------------------------------- */
 @media (min-width: $medium-breakpoint) {
 	.logo-container {
 		padding: 20px;
@@ -96,27 +100,12 @@ header#site-header {
 	}
 }
 
-// Tablets{}
+// Tablets
 @media (max-width: $tablet-breakpoint) {
 	.contact-container {
 		padding-right: 1em;
 	}
 }
 
-/* Medium only */
-@media (min-width: 40em) and (max-width: 63.9375em) {
-}
-
-// Large screens
-@media (min-width: $medium-breakpoint) {
-}
-
-/* Extra large */
-@media (min-width: 100em) {
-}
-
-/* Large only */
-@media (min-width: 64em) and (max-width: 74.9375em) {
-}
 
 </style>

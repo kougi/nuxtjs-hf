@@ -3,15 +3,11 @@
 <section class="hero">
     <div class="hero-text-container">
         <div class="row hero-headline">
-
             <div class="col-xs-12 col-md-11">
-
                 <h1>We’re hands-on and committed to evolving your business to strive for better.</h1>
             </div>
 
         </div>
-
-        
         <div class="row hero-paragraph">
             <div class="col-xs-12 col-md-6 col-md-offset-5">
                 <h2>Our Offering</h2>
@@ -50,6 +46,9 @@ export default {
 
 <style lang="scss">;
 
+
+/* General styles for hero
+--------------------------------------------------------------------- */
 section.hero {
 	margin-bottom: 4em;
 
@@ -69,7 +68,12 @@ section.hero {
 .hero-headline {
 }
 
-/* Small only */
+
+//____ End general styles   //________________________
+
+
+/* Mobile only
+--------------------------------------------------------------------- */
 @media (max-width: $mobile-breakpoint) {
 	.row {
 		margin: 0;
@@ -90,5 +94,6 @@ section.hero {
 	.hero-paragraph {
 	}
 }
+//____ End mobile styles   //________________________
 
 </style>

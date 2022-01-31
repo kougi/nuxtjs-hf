@@ -19,14 +19,9 @@
 </template>
 
 <script>
-
-// https://github.com/ashthornton/asscroll
-// import { ASScroll } from 'https://cdn.skypack.dev/@ashthornton/asscroll'
-// import ASScroll from "https://cdn.skypack.dev/@ashthornton/asscroll"
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {ScrollToPlugin} from "gsap/ScrollToPlugin";
-// import SubscribtionModal from "./components/SubscribtionModal.vue";
 
 export default {
     //Set a few default variables
@@ -41,8 +36,6 @@ export default {
     created() {
         // Register GSAP ScrollTrigger plugin
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-        //Allow functions to be accessed within components
-        //  this.$root.$refs.A = this;
     },
     mounted() {
         //Default window size
@@ -54,22 +47,39 @@ export default {
         if (history.scrollRestoration) {
             history.scrollRestoration = "manual";
         }
-        //Is the user on mobile?
-        const isMobile = ("ontouchstart" in document.documentElement && navigator.userAgent.match(/Mobi/));
+
+
+        //Check the device being used by the user so we can see if they're on a mobile or tablet
+        const userAgent = navigator.userAgent.toLowerCase();
+
+        //is the user on mobile?
+        var isMobile = /iPhone|Android/i.test(navigator.userAgent);
+        // console.log(isMobile);
+
+        //Are they on a tablet?
+        const isTablet = /(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(userAgent);
+        //  console.log(isTablet)
+
+
+
         //If on mobile, animate the hero
-        if (isMobile) {
-            console.log("mobile");
-            //Function which handles the animation
+        if (isMobile || isTablet) {
+            // console.log("mobile");
+            //Function which handles the GSAP animation
             heroMobile();
         }
-        // Trigger resize event if on mobile and switching between landscape/portrait
+
+        // Trigger resize event if on mobile and switching between landscape/portrait orientation
         screen.orientation.addEventListener("change", this.resizeHandler);
-        //If on desktop, listen out for window resizing
-        if (!isMobile) {
+
+        //If on desktop, listen out for window resizing and refresh the logo timeline
+        if (!isMobile && !isTablet) {
             window.addEventListener("resize", this.resizeHandler);
-            console.log("desktop");
+            // console.log("desktop");
             stayUpdatedDesktop();
         }
+
+
         //Events for mobile only
         ////////////////////////////////////////////////////
         function heroMobile() {
@@ -101,12 +111,14 @@ export default {
             let stayUpdatedButton = gsap.timeline({
                 scrollTrigger: {
                     trigger: ".newsletter",
-                    start: "top 100%-=42",
+                    invalidateOnRefresh: true,
+                    start: () => `top 100%-=42`,
                     // end: 'bottom 50%',
                     toggleActions: "play none none reset",
                     markers: false,
                 },
             });
+
             //Make the actual header visible once it collides with the fixed element.
             stayUpdatedButton.to("#stay-updated", {
                 //Change the positioning once it collides with the newsletter subscribe form
@@ -115,6 +127,19 @@ export default {
                 // opacity:1,
                 visibility: "visible",
             }, "0");
+
+            //Scroll reveal animations, desktop only.
+            gsap.utils.toArray(".gs_reveal").forEach(function(elem) {
+              hide(elem); // assure that the element is hidden when scrolled into view
+              
+              ScrollTrigger.create({
+                trigger: elem,
+                onEnter: function() { animateFrom(elem) }, 
+                onEnterBack: function() { animateFrom(elem, -1) },
+                onLeave: function() { hide(elem) } // assure that the element is hidden when scrolled into view
+              });
+            });
+
         }
         // Check if link is an anchor link to the same page so that the scroll to it can be animated
         function getSamePageAnchor(link) {
@@ -266,38 +291,73 @@ export default {
     }
 
 
-      //Scroll reveal animations
-      gsap.utils.toArray(".gs_reveal").forEach(function(elem) {
-        hide(elem); // assure that the element is hidden when scrolled into view
-        
-        ScrollTrigger.create({
-          trigger: elem,
-          onEnter: function() { animateFrom(elem) }, 
-          onEnterBack: function() { animateFrom(elem, -1) },
-          onLeave: function() { hide(elem) } // assure that the element is hidden when scrolled into view
-        });
-      });
-    
+      
+
+
+
+
+
+
+	    //Change the size of the viewport when the <details> is expanded (Attempt to fix bug where content is pushed beyond the bottom of the screen)
+  		document.querySelectorAll('details')
+  		.forEach(details => {
+  			details.addEventListener("toggle", event => {
+  				const expandedHeight = getComputedStyle(document.querySelector('details'))
+  					.getPropertyValue('--expanded');
+  				//Fade in the info when the <details> element is opened. For some strange reason, the CSS selector details[open] doesn't work with transitions/animations for child elements unless dev tools is open, so needed to use js
+  				details.classList.toggle("fade-in");
+ 
+          //Refresh "Stay updated timeline when <details> is opened"
+  				if (details.open) {
+
+  					/* the element was toggled open */
+            // stayUpdatedButton.clear()
+
+          // stayUpdatedButton.kill();
+          // let stayUpdatedButton = gsap.timeline({
+          //       scrollTrigger: {
+          //           trigger: ".newsletter",
+          //           invalidateOnRefresh: true,
+          //           start: () => `top 100%-=42`,
+          //           // end: 'bottom 50%',
+          //           toggleActions: "play none none reset",
+          //           markers: true,
+          //       },
+          //   });
+
+            // stayUpdatedButton.clear()
+            // //Make the actual header visible once it collides with the fixed element.
+            // stayUpdatedButton.to("#stay-updated", {
+            //     //Change the positioning once it collides with the newsletter subscribe form
+            //     position: "absolute"
+            // }, "0").to("h2#subscribe", {
+            //     // opacity:1,
+            //     visibility: "visible",
+            // }, "0");
+            // console.log("opened")
+  				} else {
+  					/* the element was toggled closed */
+  					// console.log('Close');
+  					// document.getElementById("viewport").style.paddingBottom = `0`;
+  				}
+  			});
+  		})
+
 
 
 
 
 
     }, // mounted
+
     unmounted() {
         window.removeEventListener("resize", this.resizeHandler);
-    },
+    }, //unmounted
+
+
     methods: {
         //Function which is triggered when the window is resized, including right after page loads as it contains logo animation's timeline.
         resizeHandler(e) {
-          // Fade in the logo when resizing, looks less glitchy
-          //  let logoContainer = document.querySelector(".logo-container a");
-          //   logoContainer.classList.add("fade-in");
-          //   setTimeout(function() {
-          //         logoContainer.classList.remove("fade-in");
-          //       }, 900);
-          
-
             //Get new size
             this.height = window.innerHeight;
             this.width = window.innerWidth;
@@ -316,7 +376,7 @@ export default {
                     //update view height value on refresh
                     end: () => `+=${(this.height - headerHeightOffset)}`,
                     onRefresh: () => {
-                        console.log("Refreshed logo timeline");
+                        // console.log("Refreshed logo timeline");
                     }
                 }
             });
@@ -355,17 +415,19 @@ export default {
             }, {
                 opacity: 1
             }, "0");
+
             // Resize carousel buttons. use a timer as as otherwise it uses the previous size of the window.
             let prevButton = document.querySelector(".swiper-button-prev");
             let nextButton = document.querySelector(".swiper-button-next");
             setTimeout(function () {
                 let swiperHeight = document.querySelector(".swiper figure>img").offsetHeight;
-                console.log("Swiper height: " + swiperHeight + "");
+                // console.log("Swiper height: " + swiperHeight + "");
                 prevButton.style.height = `${swiperHeight}px`;
                 nextButton.style.height = `${swiperHeight}px`;
             }, 500);
         },
-    },
+    }, //methods
+
     setup() {
         //Define app meta for Nuxt3 (In Nuxt2 it seems this could be done in nuxt.config.js, but there's limited documentation for Nuxt3 )
         useMeta({
@@ -377,7 +439,7 @@ export default {
                     content: "#736357",
                 }],
         });
-    },
+    }, //setup
     
 }; //export default
 
