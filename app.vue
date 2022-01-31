@@ -437,8 +437,10 @@ export default {
 
   @font-face {
   font-family: 'Messina Sans';
-  src: url('./assets/fonts/MessinaSansWeb-Regular.woff2') format('woff2'),
-      url('~/assets/fonts/MessinaSansWeb-Regular.woff') format('font-woff');
+  src: 
+      url('assets/fonts/MessinaSansWeb-Regular.eot'), /* older browsers */
+      url('~/assets/fonts/MessinaSansWeb-Regular.woff') format('font-woff'),
+      url('./assets/fonts/MessinaSansWeb-Regular.woff2') format('woff2'); /* Modern browsers */
   font-weight: normal;
   font-style: normal;
   }
