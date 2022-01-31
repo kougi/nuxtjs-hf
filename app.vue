@@ -89,17 +89,102 @@ export default {
             var headerHeightOffset = (Number(headerHeight.replace("px", "")) + 10);
 
             // Hero's GSAP actions
-            gsap.to(".hero-headline", {
+            //Lock headline to top
+            // gsap.to(".hero-headline", {
+            //     scrollTrigger: {
+            //         trigger: ".hero-headline",
+            //         pin: true,
+            //         // pinSpacing: false,
+            //         pinSpacing: "margin",
+            //         start: () => `top top+=${headerHeightOffset}`,
+            //         // end: "+=450",
+            //         end: "+=400",
+            //         scrub: true
+            //     },
+            //     // background: ''
+            // }, 0);
+
+            // // Lock hero's paragraph to bottom
+            // gsap.to(".hero-paragraph", {
+            //     scrollTrigger: {
+            //         trigger: ".hero-paragraph",
+            //         pin: true,
+            //         // pinSpacing: "margin",
+                    
+            //         markers: true,
+            //         pinSpacing: true,
+            //         // start: () => `top top+=${headerHeightOffset}`,
+            //         start: () => `bottom bottom-=20`,
+            //         end: "+=100",
+            //         scrub: true
+            //     },
+            //     // background: ''
+            // }, "+=0");
+
+
+            // Make a timeline for the hero
+            let heroTimeline = gsap.timeline({
                 scrollTrigger: {
+                    invalidateOnRefresh: true,
+                    markers: true,
                     trigger: ".hero-headline",
                     pin: true,
+                    scrub: true,
                     start: () => `top top+=${headerHeightOffset}`,
-                    end: "+=450",
-                    // scrub: true
+                    //update view height value on refresh
+                    end: "+=500",
+                }
+            });
+      
+                 // Lock hero's paragraph to bottom
+            gsap.to(".hero-paragraph", {
+                scrollTrigger: {
+                    trigger: ".hero-paragraph",
+                    pin: true,
+                    // pinSpacing: "false",
+                    
+                    markers: true,
+                    pinSpacing: true,
+                    // start: () => `top top+=${headerHeightOffset}`,
+                    start: () => `bottom bottom-=20`,
+                    end: "+=100",
+                    scrub: true
                 },
                 // background: ''
-            });
-            ; //end timeline
+            }, "0");
+            
+            //Update the logo timeline tweens
+            heroTimeline
+                .fromTo(".hero-paragraph", {
+                  // trigger: ".hero-paragraph",
+                  // opacity:0,
+                  // pin: true,
+                  // pinSpacing: true,
+                  // scale: 3,
+                  //  y: () => `bottom bottom-=20`,
+                  // start: () => `bottom bottom-=20`,
+                    //  end: "+=100",
+                
+                // y: () => `${(this.height - headerHeightOffset - headerHeightOffset)}`,
+            }, {
+                // y: 0,
+                // opacity: 1,
+                // scale: 1,
+            }, ">-30")
+            ;
+
+          
+            
+
+
+                //Change opacity of header's side menu and hero as user scrolls down
+            //     .fromTo(".hero-headline", {
+            //       trigger: ".hero-headline",
+            //       pin: true,
+            // }, {
+            //     opacity: 1,
+            // },);
+      
         } //end of mobile only scripts
 
         // Create the "Stay updated" button's GSAP timeline if the user is on desktop
@@ -362,6 +447,7 @@ export default {
                 console.log("resized");
                 logoTimeline.kill();
             }
+
             //Update the logo timeline tweens
             logoTimeline.clear()
                 .fromTo(".logo-container", {
@@ -428,12 +514,12 @@ export default {
       - CSS variables: branding colours, font sizes, etc.
 */
 
-   @font-face {
+   /* @font-face {
     font-family: "Messina Sans";
      src: url(~/assets/fonts/MessinaSansWeb-Regular.woff2) format('woff2');  
      font-weight: normal;
      font-style: normal;
-     }
+     } */
 
   /*@font-face {
   font-family: 'Messina Sans';

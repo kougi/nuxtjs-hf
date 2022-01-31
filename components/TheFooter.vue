@@ -44,8 +44,8 @@ created() {
         trigger: '.newsletter',
         // start: 'bottom bottom',
         // start: 'top-=400 top',
-        start: 'bottom-=30 bottom ',
-        end: () => `bottom bottom`,
+        start: 'bottom bottom ',
+        end: () => `bottom bottom-=20`,
         // markers: true,
         // scrub: true,
         toggleActions: 'play none reverse none'

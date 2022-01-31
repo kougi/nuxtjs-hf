@@ -50,7 +50,7 @@ export default {
 /* General styles for hero
 --------------------------------------------------------------------- */
 section.hero {
-	margin-bottom: 4em;
+	margin-bottom: 5em;
 
 	h1 {
 		margin-bottom: 0.5em;
@@ -81,18 +81,25 @@ section.hero {
 			padding: 0;
 		}
 	}
+    
 	section.hero {
 		// padding: var(--header-height) var(--site-padding) 0 var(--site-padding);
 		margin-bottom: 1.5em;
         h2{
             margin-top: 0;
         }
+        .hero-headline h1{
+            margin-bottom: -1.5em;
+    }
 	}
 
 	.hero-text-container {
 	}
 	.hero-paragraph {
+        // position: absolute;
+        // margin-bottom: -5em;
 	}
+
 }
 //____ End mobile styles   //________________________
 
