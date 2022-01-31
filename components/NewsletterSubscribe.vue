@@ -330,7 +330,7 @@ input[type="submit"] {
 		form input:not([type="submit"]),
 		h3 {
 			// text-indent: -5px;
-			margin-left: -12px;
+			margin-left: -11px;
 		}
 	}
 
