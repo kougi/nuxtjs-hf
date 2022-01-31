@@ -418,7 +418,7 @@ export default {
 </script>
 
 
-<style lang="scss">;
+<style>;
 /* Global SCSS in stored in assets/scss 
    /_main.scss
       - Global rules which apply to the entire site
@@ -428,17 +428,17 @@ export default {
       - CSS variables: branding colours, font sizes, etc.
 */
 
-  // @font-face {
+  /* // @font-face {
   //   font-family: "Messina Sans";
   //   src: url(~/assets/fonts/MessinaSansWeb-Regular.woff2) format('woff2');  
   //   font-weight: normal;
   //   font-style: normal;
-  //   }
+  //   } */
 
   @font-face {
   font-family: 'Messina Sans';
   src: url('./assets/fonts/MessinaSansWeb-Regular.woff2') format('woff2'),
-      url('./assets/fonts/MessinaSansWeb-Regular.woff') format('woff');
+      url('~/assets/fonts/MessinaSansWeb-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   }
