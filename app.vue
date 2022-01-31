@@ -60,8 +60,6 @@ export default {
         const isTablet = /(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(userAgent);
         //  console.log(isTablet)
 
-
-
         //If on mobile, animate the hero
         if (isMobile || isTablet) {
             // console.log("mobile");
@@ -298,7 +296,7 @@ export default {
 
 
 
-	    //Change the size of the viewport when the <details> is expanded (Attempt to fix bug where content is pushed beyond the bottom of the screen)
+	    //Change the size of the viewport and perform events when the <details> is expanded (Attempt to fix bug where content is pushed beyond the bottom of the screen)
   		document.querySelectorAll('details')
   		.forEach(details => {
   			details.addEventListener("toggle", event => {
@@ -307,38 +305,12 @@ export default {
   				//Fade in the info when the <details> element is opened. For some strange reason, the CSS selector details[open] doesn't work with transitions/animations for child elements unless dev tools is open, so needed to use js
   				details.classList.toggle("fade-in");
  
-          //Refresh "Stay updated timeline when <details> is opened"
+          //Refresh "Stay updated" timeline when <details> is opened"
   				if (details.open) {
-
-  					/* the element was toggled open */
-            // stayUpdatedButton.clear()
-
-          // stayUpdatedButton.kill();
-          // let stayUpdatedButton = gsap.timeline({
-          //       scrollTrigger: {
-          //           trigger: ".newsletter",
-          //           invalidateOnRefresh: true,
-          //           start: () => `top 100%-=42`,
-          //           // end: 'bottom 50%',
-          //           toggleActions: "play none none reset",
-          //           markers: true,
-          //       },
-          //   });
-
-            // stayUpdatedButton.clear()
-            // //Make the actual header visible once it collides with the fixed element.
-            // stayUpdatedButton.to("#stay-updated", {
-            //     //Change the positioning once it collides with the newsletter subscribe form
-            //     position: "absolute"
-            // }, "0").to("h2#subscribe", {
-            //     // opacity:1,
-            //     visibility: "visible",
-            // }, "0");
             // console.log("opened")
   				} else {
   					/* the element was toggled closed */
   					// console.log('Close');
-  					// document.getElementById("viewport").style.paddingBottom = `0`;
   				}
   			});
   		})
@@ -456,12 +428,18 @@ export default {
       - CSS variables: branding colours, font sizes, etc.
 */
 
+  // @font-face {
+  //   font-family: "Messina Sans";
+  //   src: url(~/assets/fonts/MessinaSansWeb-Regular.woff2) format('woff2');  
+  //   font-weight: normal;
+  //   font-style: normal;
+  //   }
+
   @font-face {
-    font-family: "Messina Sans";
-    src: url(~/assets/fonts/MessinaSansWeb-Regular.woff2) format('woff2');  
-    font-weight: normal;
-    font-style: normal;
-    }
-
-
+  font-family: 'Messina Sans';
+  src: url('./assets/fonts/MessinaSansWeb-Regular.woff2') format('woff2'),
+      url('./assets/fonts/MessinaSansWeb-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  }
 </style>
