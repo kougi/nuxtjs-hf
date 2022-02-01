@@ -344,7 +344,7 @@ input[type="submit"] {
 
 /* Medium and up
 --------------------------------------------------------------------- */
-@media (min-width: $mobile-breakpoint) {
+@media (min-width: $medium-breakpoint) {
 	section.newsletter {
 		h3 {
 			height: 168px;

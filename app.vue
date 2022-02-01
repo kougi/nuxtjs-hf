@@ -89,6 +89,7 @@ export default {
         function heroMobile() {
             // Get the height of phone
             // var phoneHeight = window.innerHeight;
+            document.body.classList.add("mobile");
             var phoneHeight = window.innerHeight;
             //Determine the header's height by getting the CSS variable and then stripping the string of px
             var headerHeight = window.getComputedStyle(document.documentElement).getPropertyValue("--header-height");

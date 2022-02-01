@@ -88,14 +88,23 @@ section.hero {
 			margin-top: 0;
 		}
 		.hero-headline h1 {
-			margin-bottom: -3.7em;
+			// margin-bottom: -3.7em;
+            margin-bottom: 1em;
 		}
 	}
 
 	.hero-text-container {
 	}
-	.hero-paragraph {
-		opacity: 0;
+	
+
+    // If mobile detected via JS
+    body.mobile section.hero {
+		.hero-headline h1 {
+			margin-bottom: -3.7em;
+		}
+        .hero-paragraph {
+		    opacity: 0;
+	    }
 	}
 }
 //____ End mobile styles   //_____________________________________________
