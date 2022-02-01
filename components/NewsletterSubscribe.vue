@@ -106,6 +106,19 @@ export default {
 		})
 	}
 
+	//Dynamic Form Label
+	const input = document.querySelectorAll('.form-row input');
+
+	input.forEach(function(el) {
+		el.addEventListener('input', function(e) {
+			if (e.target.value == "") {
+			e.target.classList.remove('valid')
+			} else {
+			e.target.classList.add('valid')
+			}
+
+		});
+	});
   }, //mounted
 
  methods: {
@@ -121,7 +134,9 @@ export default {
 
 			//If the form goes through correctly, remove the "required" red underline class on the <input>s
 			document.querySelector("#fname").classList.remove("required");
+			// document.querySelector("#fname").classList.add("valid");
 			document.querySelector("#email").classList.remove("required");
+			document.querySelector("#email").classList.add("valid");
             return true;
         }
 
@@ -133,7 +148,9 @@ export default {
 
 			// let fName = document.querySelector("fname");
 			document.querySelector("#fname").classList.add("required");
-        }
+        }else{
+			document.querySelector("#fname").classList.add("valid");
+		}
         // if (!this.companyName) {
         //     this.errors.push('Company name required');
         // }
@@ -165,7 +182,7 @@ export default {
 
 
 
-/* Global newsletter form styles
+/* Global newsletter subscribtion form styles
 --------------------------------------------------------------------- */
 
 // Fixed anchor link to jump to newsletter subscribe form
@@ -195,7 +212,7 @@ section.newsletter {
 		position: relative;
 	}
 	form {
-        position: relative;
+		position: relative;
 
 		//Text inputs
 		input:not([type="submit"]) {
@@ -204,35 +221,39 @@ section.newsletter {
 			padding: 0;
 			opacity: 0.7;
 			margin: -23px 0 0 0;
-            // border-bottom: solid 1px transparent;
+			// border-bottom: solid 1px transparent;
 
-            // outline: 1px dashed transparent;
-            // outline-offset: 10px;
+			// outline: 1px dashed transparent;
+			// outline-offset: 10px;
 
-			text-decoration: underline 3px rgba(255, 255, 255, 0) ;
-    			transition: text-decoration-color 500ms cubic-bezier(0.104, 0.204, 0.492, 1), opacity 300ms ease-out;
-				text-underline-position: from-font;
-				    &:focus{
-						outline: none;
-						text-decoration: underline 3px  var(--font-color) ;
-					}
+			text-decoration: underline 3px rgba(255, 255, 255, 0);
+			transition: text-decoration-color 500ms cubic-bezier(0.104, 0.204, 0.492, 1),
+				opacity 300ms ease-out;
+			text-underline-position: from-font;
+			&:focus {
+				outline: none;
+				text-decoration: underline 3px var(--font-color);
+			}
 
 			&:hover {
 				opacity: 1;
 			}
 		}
 		// Red underline if form field invalid
-		input.required{
-				text-decoration: underline 3px red ;
-			}
+		input.required {
+			text-decoration: underline 3px red;
+		}
+		input.valid {
+			text-decoration: underline 3px #2e6c25;
+		}
 		label {
 			display: none;
 		}
 	}
 }
 
-
-section.newsletter h2, #stay-updated {
+section.newsletter h2,
+#stay-updated {
 	font-size: 1.2em;
 	text-transform: uppercase;
 }
@@ -254,8 +275,8 @@ input[type="submit"] {
 
 // Container for form errors
 .errors-container {
-	ul{
-		padding-top:0.3em;
+	ul {
+		padding-top: 0.3em;
 	}
 	li {
 		list-style-type: disc;
@@ -271,10 +292,17 @@ input[type="submit"] {
 	opacity: 0.3;
 }
 
-//____ End global styles   //________________________________________
+//____ End global Newsletter subscribtion form styles   //______________
 
-/* Small only
+
+/* Small/mobile only
 --------------------------------------------------------------------- */
+
+// Tall phones
+@media (max-width: $thin-tall-mobile-breakpoint) {
+}
+
+//Normal phones
 @media (max-width: $mobile-breakpoint) {
 	section.newsletter {
 		padding-bottom: 20em;
@@ -291,27 +319,28 @@ input[type="submit"] {
 		h3 {
 			margin-left: -3px;
 			margin-bottom: 0;
-			font-size:47px;
-			
+			// font-size: 50px;
 		}
 		form input:not([type="submit"]) {
-			    margin-top: 0px;
-				line-height: normal;
-				// Limit width of the form Inputs so that it doesn't cause horizontal scrolling
-				max-width: calc(100vw - var(--site-padding) - var(--site-padding));
+			margin-top: 0px;
+			line-height: normal;
+			// Limit width of the form Inputs so that it doesn't cause horizontal scrolling
+			max-width: calc(100vw - var(--site-padding) - var(--site-padding));
 		}
 	}
-    // Form validation
-    .errors-container {
-        padding: 1em 0;
-    }
+	// Form validation
+	.errors-container {
+		padding: 1em 0;
+	}
 
 	#stay-updated {
 		display: none;
 	}
 }
 
-//____ End small only   //____________________________
+
+//____ End small/mobile only   //_______________________________________
+
 
 /* Medium and up
 --------------------------------------------------------------------- */
@@ -334,13 +363,30 @@ input[type="submit"] {
 		}
 	}
 
-    // Form validation
-    .errors-container {
-        position: absolute;
-        right: 10em;
-        bottom: 0;
-    }
+	// Form validation
+	.errors-container {
+		position: absolute;
+		right: 10em;
+		bottom: 0;
+	}
 }
-//____ End medium and up  //____________________________
+
+// high end tablets in landscape
+@media 
+  (max-device-width: 1280px) 
+  and (orientation: landscape) { 
+
+    section.newsletter form input:not([type=submit]),section.newsletter h3{
+		height: unset;
+	}
+		h2#subscribe {
+			visibility: visible !important;
+		}
+		#stay-updated{
+			display: none;
+		}
+  }
+//____ End medium and up  //___________________________________________
+
 
 </style>

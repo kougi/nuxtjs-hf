@@ -1,9 +1,14 @@
 // SCSS Variables accessible in every .scss stylesheet.
+
+$thin-tall-mobile-breakpoint: 380px;
+
 $mobile-breakpoint: 54.99em;
 
-$tablet-breakpoint: 70em;
 
-$medium-breakpoint: 55em;
+$tablet-breakpoint: 60em;
+
+$medium-breakpoint: 65em;
+// 55
 
 $large-breakpoint: 70em;
 $x-large-breakpoint: 80em;

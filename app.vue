@@ -38,16 +38,18 @@ export default {
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
     },
     mounted() {
+
         //Default window size
         this.height = window.innerHeight;
         this.width = window.innerWidth;
+
         //Add smooth scrolling the website
         smoothScroll("#content");
+
         //Jump to top of page on refresh
         if (history.scrollRestoration) {
             history.scrollRestoration = "manual";
         }
-
 
         //Check the device being used by the user so we can see if they're on a mobile or tablet
         const userAgent = navigator.userAgent.toLowerCase();
@@ -60,15 +62,19 @@ export default {
         const isTablet = /(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(userAgent);
         //  console.log(isTablet)
 
-        //If on mobile, animate the hero
+        //If on mobile or tablet, animate the hero
         if (isMobile || isTablet) {
             // console.log("mobile");
             //Function which handles the GSAP animation
             heroMobile();
         }
 
-        // Trigger resize event if on mobile and switching between landscape/portrait orientation
-        screen.orientation.addEventListener("change", this.resizeHandler);
+        // Trigger resize event if on mobile and switching between landscape/portrait orientation on mobile devices
+        // screen.orientation.addEventListener("change", this.resizeHandler);
+        screen.orientation.onchange = function(e) { 
+          this.resizeHandler;
+          console.log("screen orientation change");
+        }
 
         //If on desktop, listen out for window resizing and refresh the logo timeline
         if (!isMobile && !isTablet) {
@@ -82,112 +88,55 @@ export default {
         ////////////////////////////////////////////////////
         function heroMobile() {
             // Get the height of phone
+            // var phoneHeight = window.innerHeight;
             var phoneHeight = window.innerHeight;
             //Determine the header's height by getting the CSS variable and then stripping the string of px
             var headerHeight = window.getComputedStyle(document.documentElement).getPropertyValue("--header-height");
             //remove the px from the returned value
             var headerHeightOffset = (Number(headerHeight.replace("px", "")) + 10);
-
-            // Hero's GSAP actions
-            //Lock headline to top
-            // gsap.to(".hero-headline", {
-            //     scrollTrigger: {
-            //         trigger: ".hero-headline",
-            //         pin: true,
-            //         // pinSpacing: false,
-            //         pinSpacing: "margin",
-            //         start: () => `top top+=${headerHeightOffset}`,
-            //         // end: "+=450",
-            //         end: "+=400",
-            //         scrub: true
-            //     },
-            //     // background: ''
-            // }, 0);
-
-            // // Lock hero's paragraph to bottom
-            // gsap.to(".hero-paragraph", {
-            //     scrollTrigger: {
-            //         trigger: ".hero-paragraph",
-            //         pin: true,
-            //         // pinSpacing: "margin",
-                    
-            //         markers: true,
-            //         pinSpacing: true,
-            //         // start: () => `top top+=${headerHeightOffset}`,
-            //         start: () => `bottom bottom-=20`,
-            //         end: "+=100",
-            //         scrub: true
-            //     },
-            //     // background: ''
-            // }, "+=0");
-
-
-            // Make a timeline for the hero
+            
+            // Make a timeline for the hero which locks the headline to below the header
             let heroTimeline = gsap.timeline({
                 scrollTrigger: {
                     invalidateOnRefresh: true,
-                    markers: true,
+                    markers: false,
                     trigger: ".hero-headline",
                     pin: true,
                     scrub: true,
                     start: () => `top top+=${headerHeightOffset}`,
+                    // start: 0
                     //update view height value on refresh
-                    end: "+=500",
+                    // end: "+=500",
+                    end: () => `+=${(phoneHeight - 200)}`,
                 }
             });
       
-                 // Lock hero's paragraph to bottom
+            // Lock hero's paragraph to bottom of the screen
             gsap.to(".hero-paragraph", {
                 scrollTrigger: {
                     trigger: ".hero-paragraph",
                     pin: true,
-                    // pinSpacing: "false",
-                    
-                    markers: true,
+                    markers: false,
                     pinSpacing: true,
                     // start: () => `top top+=${headerHeightOffset}`,
                     start: () => `bottom bottom-=20`,
-                    end: "+=100",
-                    scrub: true
+                    end: "+=200",
+                    scrub: true,
+                    
                 },
-                // background: ''
-            }, "0");
-            
-            //Update the logo timeline tweens
-            heroTimeline
-                .fromTo(".hero-paragraph", {
-                  // trigger: ".hero-paragraph",
-                  // opacity:0,
-                  // pin: true,
-                  // pinSpacing: true,
-                  // scale: 3,
-                  //  y: () => `bottom bottom-=20`,
-                  // start: () => `bottom bottom-=20`,
-                    //  end: "+=100",
-                
-                // y: () => `${(this.height - headerHeightOffset - headerHeightOffset)}`,
-            }, {
-                // y: 0,
-                // opacity: 1,
-                // scale: 1,
-            }, ">-30")
-            ;
-
-          
+                opacity: 1,
+                scale:1,
+            }, "<-=20");
             
 
-
-                //Change opacity of header's side menu and hero as user scrolls down
-            //     .fromTo(".hero-headline", {
-            //       trigger: ".hero-headline",
-            //       pin: true,
-            // }, {
-            //     opacity: 1,
-            // },);
       
-        } //end of mobile only scripts
+        } 
+        ////////////////////////end of mobile only scripts
+
+
 
         // Create the "Stay updated" button's GSAP timeline if the user is on desktop
+        // Desktop/non-mobile only
         function stayUpdatedDesktop() {
             //Handle the STAY UPDATED stickiness
             //Create another GSAP timeline to handle this event
@@ -223,17 +172,19 @@ export default {
               });
             });
 
-        }
-        // Check if link is an anchor link to the same page so that the scroll to it can be animated
+        } //stayUpdatedDesktop
+
+        // Check if link is an anchor link to the same page so that the scroll to it can be smoothly animated
         function getSamePageAnchor(link) {
             if (link.protocol !== window.location.protocol || link.host !== window.location.host || link.pathname !== window.location.pathname || link.search !== window.location.search) {
                 return false;
             }
             return link.hash;
         }
+
         //Determine the header's height by getting the CSS variable and then stripping the string of px
         var headerHeight = window.getComputedStyle(document.documentElement).getPropertyValue("--header-height");
-        //remove the px from the returned value
+        //Use the header's height as an offset for jumping to links so that content is always below header.
         var headerHeightOffset = (Number(headerHeight.replace("px", "")));
         // Scroll to a given hash, preventing the event given if there is one
         function scrollToHash(hash, e) {
@@ -249,12 +200,14 @@ export default {
                 });
             }
         }
+
         // If a link's href is within the current page, scroll to it instead
         document.querySelectorAll("a[href]").forEach(a => {
             a.addEventListener("click", e => {
                 scrollToHash(getSamePageAnchor(a), e);
             });
         });
+
         // Scroll to the element in the URL's hash on load
         scrollToHash(window.location.hash);
 
@@ -345,40 +298,33 @@ export default {
         } // smooth scroll
 
 
-        //GSAP reveal animations on scroll
-        function animateFrom(elem, direction) {
-      direction = direction || 1;
-      var x = 0,
-          y = direction * 100;
-      if(elem.classList.contains("gs_reveal_fromLeft")) {
-        x = -100;
-        y = 0;
-      } else if (elem.classList.contains("gs_reveal_fromRight")) {
-        x = 100;
-        y = 0;
-      }
-      elem.style.transform = "translate(" + x + "px, " + y + "px)";
-      elem.style.opacity = "0";
-      gsap.fromTo(elem, {x: x, y: y, autoAlpha: 0}, {
-        duration: 1.25, 
-        x: 0,
-        y: 0, 
-        autoAlpha: 1, 
-        ease: "expo", 
-        overwrite: "auto"
-      });
+        //GSAP reveal animations on scroll (disabled for mobile for performance.)
+      function animateFrom(elem, direction) {
+        direction = direction || 1;
+        var x = 0,
+            y = direction * 100;
+        if(elem.classList.contains("gs_reveal_fromLeft")) {
+          x = -100;
+          y = 0;
+        } else if (elem.classList.contains("gs_reveal_fromRight")) {
+          x = 100;
+          y = 0;
+        }
+        elem.style.transform = "translate(" + x + "px, " + y + "px)";
+        elem.style.opacity = "0";
+        gsap.fromTo(elem, {x: x, y: y, autoAlpha: 0}, {
+          duration: 1.25, 
+          x: 0,
+          y: 0, 
+          autoAlpha: 1, 
+          ease: "expo", 
+          overwrite: "auto"
+        });
     }
 
     function hide(elem) {
       gsap.set(elem, {autoAlpha: 0});
     }
-
-
-      
-
-
-
-
 
 
 	    //Change the size of the viewport and perform events when the <details> is expanded (Attempt to fix bug where content is pushed beyond the bottom of the screen)
@@ -390,6 +336,7 @@ export default {
   				//Fade in the info when the <details> element is opened. For some strange reason, the CSS selector details[open] doesn't work with transitions/animations for child elements unless dev tools is open, so needed to use js
   				details.classList.toggle("fade-in");
  
+          //unused attempt at fixing the form being pushed below the body when expanding a <details>
           //Refresh "Stay updated" timeline when <details> is opened"
   				if (details.open) {
             // console.log("opened")
@@ -399,12 +346,6 @@ export default {
   				}
   			});
   		})
-
-
-
-
-
-
     }, // mounted
 
     unmounted() {
@@ -417,7 +358,7 @@ export default {
         resizeHandler(e) {
             //Get new size
             this.height = window.innerHeight;
-            this.width = window.innerWidth;
+            // this.width = window.innerWidth;
             //Update height of the header to match the CSS variable
             var headerHeight = window.getComputedStyle(document.documentElement).getPropertyValue("--header-height");
             //remove the px from the returned value
@@ -453,6 +394,7 @@ export default {
                 .fromTo(".logo-container", {
                 scale: 3,
                 opacity: 1,
+                //For the initial positioning of the logo, we use the full height of the page, and then move it up the equivalent of two headers
                 y: () => `${(this.height - headerHeightOffset - headerHeightOffset)}`,
             }, {
                 y: 0,
@@ -474,7 +416,7 @@ export default {
                 opacity: 1
             }, "0");
 
-            // Resize carousel buttons. use a timer as as otherwise it uses the previous size of the window.
+            // Resize carousel buttons to be the same height as the images. use a timer as as otherwise it uses the previous size of the window.
             let prevButton = document.querySelector(".swiper-button-prev");
             let nextButton = document.querySelector(".swiper-button-next");
             setTimeout(function () {
@@ -490,7 +432,6 @@ export default {
         //Define app meta for Nuxt3 (In Nuxt2 it seems this could be done in nuxt.config.js, but there's limited documentation for Nuxt3 )
         useMeta({
             meta: [{
-                    title: "Hambly Freeman - Technical Challenge",
                     name: "viewport",
                     content: "width=device-width, initial-scale=1, maximum-scale=1",
                     name: "theme-color",
@@ -498,7 +439,15 @@ export default {
                 }],
         });
     }, //setup
-    
+
+    //Page title
+     head() {
+      return {
+        title: "Hambly Freeman - Technical Challenge",
+        description: "Made with Nuxt3 by James Beach",
+        
+      };
+    }
 }; //export default
 
 </script>
@@ -511,7 +460,7 @@ export default {
    /_sass-variables.scss
       - Just a few variables for sass, such as media query breakpoints accessible in each .scss file
    /_variables.scss
-      - CSS variables: branding colours, font sizes, etc.
+      - CSS variables: branding colours, browser customisation, font sizes, etc.
 */
 
    /* @font-face {

@@ -1,105 +1,160 @@
 ;
-// CSS Variables (Using mobile for deaults)
+/* General CSS variables (Using mobile for default values)
+--------------------------------------------------------------------- */
 :root {
-    --font-color: #736357;
-    --background-color: #f9f5ef;
-    --header-height: 60px;
+	--font-color: #736357;
+	--background-color: #f9f5ef;
+	--header-height: 60px;
 
-    --site-padding: 15px;
+	--site-padding: 15px;
 
-    --fs-hero-text: 50px;
-    --fs-annotation-text: 18px;
-    --fs-navigation-text: 10px;
+	--fs-hero-text: 50px;
+	--fs-annotation-text: 18px;
+	--fs-navigation-text: 10px;
+}
 
+// Mobile specific
+@media (max-width: $medium-breakpoint) {
+	:root {
+		// --header-height: 60px;
+	}
+}
+// Tall phones
+//The given font sizes don't work too well on my personal phone, so if a phone is tall/thin, I'm reducing the font sizes slightly to avoid line breaks.
+@media (max-width: $thin-tall-mobile-breakpoint) {
+    :root {
 
-    // Text sizing
-  }
+      --fs-hero-text: 44px;
+      --fs-annotation-text: 15px;
 
-  // Mobile specific
-  // @media (max-width: 39.9375em) 
-  @media (max-width: $medium-breakpoint) 
-  {
-    :root{
-        // --header-height: 60px;
     }
   }
 
-  /* Medium and up (Tablets/desktop) */
-@media (min-width: $mobile-breakpoint) {
+  // Mobile landscape
+//   @media screen and (max-device-width: 767px) and (orientation: landscape) {
+//     :root {
+//       // --header-height: 60px;
+//       --fs-hero-text: 100px ;
+//       --fs-annotation-text: 15px;
+  
+//     }
+//   }
 
-  :root{
-    --header-height: 120px;
-    --site-padding: 40px;
+//     @media screen 
+//   and (device-width: 320px) 
+//   and (device-height: 640px) 
+//   and (-webkit-device-pixel-ratio: 3) 
+//   and (orientation: landscape) {
 
-    --fs-hero-text: 144px;
-    --fs-annotation-text: 45px;
-    --fs-navigation-text: 16px;
+
+// }
+@media only screen and (min-width: 851px) and (orientation: landscape){
+  :root {
+    // --header-height: 60px;
+    --fs-hero-text: 55px ;
+    --fs-annotation-text: 15px;
+
   }
 }
 
-// for tablets/mobile in Landscape 
-@media (orientation: landscape) and (max-width: 50em) {
-  :root{
-    --header-height: 60px;}
-}
-
   
+  // Tablet landscape
+    @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {}
   
-  //Only show focus effect when the user is using keyboard. Don't show when clicking on element.
-  :focus-visible {
-    outline: 1px dashed var(--font-color);
-  }
+ 
     
-  /* Focusing the button with a mouse, touch, or stylus will show a subtle drop shadow. */
-  :focus:not(:focus-visible) {
-    outline: none;
   
-  }
-  
-  
-  // Change the scrollbar colour to match the website's colour scheme.
-  ::-webkit-scrollbar {
-    width: 10px;
-    // border-radius:10px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    // background: #f1f1f1;
-    // background: #528095;
-    background:var(--background-color);;
-    // border-radius:10px;
-  }
-  
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    // background: #888;
-    // background: #f9c985;
-    background: var(--font-color);
-    // border-radius:10px;
-    // outline: 1px solid slategrey;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    // background: #555;
-    background: #5f4939;
-  }
-  ::-webkit-scrollbar-thumb:active{
-    background: #ac8262;
-    // border-left:solid 2px #4a321f;;
-    // box-shadow: 0px 0px 6px 2px blue;
-  }
-  
-  // Change the color of the text selection for a further customised feel on the website. A small touch
-  ::selection {
-    color: var(--background-color);
-    background: var(--font-color);
-  }
 
-  /* Change Autocomplete styles in Chrome*/
+/* CSS variables for medium and up screens
+--------------------------------------------------------------------- */
+@media (min-width: $medium-breakpoint) {
+	:root {
+		--header-height: 120px;
+		--site-padding: 40px;
+
+		--fs-hero-text: 144px;
+		--fs-annotation-text: 45px;
+		--fs-navigation-text: 16px;
+	}
+}
+
+// for tablets/mobile in Landscape
+@media (orientation: landscape) and (max-width: 1024px) {
+	
+}
+
+// High end tablets in landscape
+@media 
+  (max-device-width: 1280px) 
+  and (min-device-width: 852px) 
+  and (orientation: landscape) { 
+    :root {
+      // --header-height: 60px;
+      --fs-hero-text: 100px ;
+      --fs-annotation-text: 15px;
+  
+    }
+}
+
+//____ End of responsive CSS variable values   //______________________
+
+
+/* Additional browser customisation. Text select, scrollbar colour, Chrome autofill colours, etc.
+--------------------------------------------------------------------- */
+
+//Only show focus effect when the user is using keyboard. Don't show when clicking on element.
+:focus-visible {
+	outline: 1px dashed var(--font-color);
+}
+
+/* Focusing the button with a mouse, touch, or stylus will show a subtle drop shadow. */
+:focus:not(:focus-visible) {
+	outline: none;
+}
+
+// Change the scrollbar colour to match the website's colour scheme.
+::-webkit-scrollbar {
+	width: 10px;
+	// border-radius:10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	// background: #f1f1f1;
+	// background: #528095;
+	background: var(--background-color);
+	// border-radius:10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	// background: #888;
+	// background: #f9c985;
+	background: var(--font-color);
+	// border-radius:10px;
+	// outline: 1px solid slategrey;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	// background: #555;
+	background: #5f4939;
+}
+::-webkit-scrollbar-thumb:active {
+	background: #ac8262;
+	// border-left:solid 2px #4a321f;;
+	// box-shadow: 0px 0px 6px 2px blue;
+}
+
+// Change the color of the text selection for a further customised feel on the website. A small touch
+::selection {
+	color: var(--background-color);
+	background: var(--font-color);
+}
+
+/* Change Autocomplete styles in Chrome*/
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
+input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 textarea:-webkit-autofill,
 textarea:-webkit-autofill:hover,
@@ -107,85 +162,81 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-  -webkit-text-fill-color: #736357;
-    -webkit-box-shadow: 0 0 0px 1000px #f9eedc inset;
+	-webkit-text-fill-color: #736357;
+	-webkit-box-shadow: 0 0 0px 1000px #f9eedc inset;
 }
 
-  // Animations
-  @keyframes fadeIn{
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
+//____ End browser customisation   //_________________________________
+
+/* Animations
+//--------------------------------------------------------------------- */
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes nextButton {
+	0% {
+		// opacity: 0;
+		transform: rotate(0deg) scale(1) skew(0deg, 0deg);
+	}
+
+	50% {
+		// transform: scale(0.8);
+		transform: rotate(11deg) scale(0.8) skew(-5deg, 0deg);
+	}
+
+	100% {
+		// opacity: 1;
+		transform: rotate(0deg) scale(1) skew(0deg, 0deg);
+	}
+}
+
+@keyframes prevButton {
+	0% {
+		// opacity: 0;
+		transform: rotate(0deg) scale(1) skew(0deg, 0deg);
+	}
+
+	50% {
+		// transform: scale(0.8);
+		transform: rotate(-11deg) scale(0.8) skew(5deg, 0deg);
+	}
 
 
-  @keyframes nextButton {
-    0% {
-      // opacity: 0;
-      transform: rotate(0deg) scale(1) skew(0deg, 0deg);
-    }
-  
-    50% {
-      // transform: scale(0.8);
-      transform: rotate(11deg) scale(0.8) skew(-5deg, 0deg);
-    }
-  
-    // 70% {
-    //   transform: scale(.9);
-    // }
-  
-    100% {
-      // opacity: 1;
-      transform: rotate(0deg) scale(1) skew(0deg, 0deg);
-    }
-  }
+	100% {
+		// opacity: 1;
+		transform: rotate(0deg) scale(1) skew(0deg, 0deg);
+	}
+}
 
-  @keyframes prevButton {
-    0% {
-      // opacity: 0;
-      transform: rotate(0deg) scale(1) skew(0deg, 0deg);
-    }
-  
-    50% {
-      // transform: scale(0.8);
-      transform: rotate(-11deg) scale(0.8) skew(5deg, 0deg);
-    }
-  
-    // 70% {
-    //   transform: scale(.9);
-    // }
-  
-    100% {
-      // opacity: 1;
-      transform: rotate(0deg) scale(1) skew(0deg, 0deg);
-    }
-  }
+//Animations for the carousel's button press. Use different directions for Previous and Next.
+.next-button-animation {
+	animation: nextButton 0.3s;
+	transition-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+	animation-fill-mode: forwards;
+}
 
-  .next-button-animation{
-    animation: nextButton 0.3s;
-      transition-timing-function: cubic-bezier(0.550, 0.085, 0.680, 0.530);
-      animation-fill-mode: forwards;
-  }
+.prev-button-animation {
+	animation: prevButton 0.3s;
+	transition-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+	animation-fill-mode: forwards;
+}
 
-  .prev-button-animation{
-    animation: prevButton 0.3s;
-      transition-timing-function: cubic-bezier(0.550, 0.085, 0.680, 0.530);
-      animation-fill-mode: forwards;
-  }
+//Fade in for the <details> on the carousel.
+.fade-in .row {
+	animation: fadeIn 1s ease-in 1 forwards;
+	&:nth-child(2) {
+		// animation-delay: 200ms;
+	}
+}
 
-  // .fade-in-element { animation-name: fadeIn; animation-duration:1s; }
+.logo-container .fade-in {
+	animation: fadeIn 1.5s ease-in 1 forwards;
+}
 
-  .fade-in .row { 
-    animation: fadeIn 1s ease-in 1 forwards;
-    
-    &:nth-child(2){
-      // animation-delay: 200ms;
-    }
-  }
-
-  .logo-container .fade-in{
-    animation: fadeIn 1.5s ease-in 1 forwards;
-  }
+//____ End animations   //_________________________________

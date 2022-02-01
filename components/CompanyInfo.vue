@@ -68,6 +68,7 @@
 
 
 <style scoped lang="scss">;
+
 /* Global company info styles for header
 --------------------------------------------------------------------- */
 // Contact, Address and menu section in header
@@ -160,7 +161,8 @@ aside.company-details {
 }
 
 
-//____ End global styles   //________________________________________
+//____ End general Company Info styles   //________________________________________
+
 
 /* Small only
 --------------------------------------------------------------------- */
@@ -212,11 +214,24 @@ aside.company-details {
 	}
 }
 
+
+// for tablets/mobile in Landscape
+@media only screen and (min-width: 500px) and (max-width: 855px) and (orientation: landscape){
+  .hamburger {
+		// display: none;
+	}
+    // .contact-container {
+	// 	display: flex !important;
+	// 	flex-direction: row;
+	// 	justify-content: space-around;
+    //     }
+}
+
 //____ End small only   //________________________________________
 
 /* Medium and up
 --------------------------------------------------------------------- */
-@media (min-width: $medium-breakpoint) {
+@media (min-width: $tablet-breakpoint) {
     // Hide hamburger icon on medium and larger screens
     .hamburger {
 		display: none;
@@ -232,7 +247,7 @@ aside.company-details {
 }
 
 // Large screens
-@media (min-width: $medium-breakpoint) {
+@media (min-width: $tablet-breakpoint) {
 	.contact {
 		//CSS for Enquiries columns on desktop
 		> div {

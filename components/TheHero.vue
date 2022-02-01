@@ -50,7 +50,7 @@ export default {
 /* General styles for hero
 --------------------------------------------------------------------- */
 section.hero {
-	margin-bottom: 5em;
+	margin-bottom: 6em;
 
 	h1 {
 		margin-bottom: 0.5em;
@@ -68,8 +68,7 @@ section.hero {
 .hero-headline {
 }
 
-
-//____ End general styles   //________________________
+//____ End general styles   //________________________________________
 
 
 /* Mobile only
@@ -81,26 +80,37 @@ section.hero {
 			padding: 0;
 		}
 	}
-    
+
 	section.hero {
 		// padding: var(--header-height) var(--site-padding) 0 var(--site-padding);
-		margin-bottom: 1.5em;
-        h2{
-            margin-top: 0;
-        }
-        .hero-headline h1{
-            margin-bottom: -1.5em;
-    }
+		margin-bottom: 3em;
+		h2 {
+			margin-top: 0;
+		}
+		.hero-headline h1 {
+			margin-bottom: -3.7em;
+		}
 	}
 
 	.hero-text-container {
 	}
 	.hero-paragraph {
-        // position: absolute;
-        // margin-bottom: -5em;
+		opacity: 0;
 	}
-
 }
-//____ End mobile styles   //________________________
+//____ End mobile styles   //_____________________________________________
+
+/* Medium and up
+--------------------------------------------------------------------- */
+@media (min-width: $medium-breakpoint) {
+	section.hero 
+    {
+        margin-bottom: 7em;
+        h2{
+        // margin-top: 0;
+            margin-top: 2em;
+        }
+    }
+}
 
 </style>

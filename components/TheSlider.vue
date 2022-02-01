@@ -22,10 +22,10 @@
             :class="[slide.moreInfo ? 'info' : 'no-info']"
             >
                 <div class="row">
-                    <div class="col-xs-12 col-md-6">
+                    <div class="col-xs-6 col-md-6">
                         Name: {{slide.name}}
                     </div>
-                    <div class="col-xs-12 col-md-6">
+                    <div class="col-xs-6 col-md-6">
                         Availability: [{{slide.availability}}]
                     </div>
                 </div>
@@ -33,10 +33,10 @@
                 <template v-if="slide.moreInfo === 1">
                     <details class="fade-in">
                         <div class="row">
-                            <div class="col-xs-12 col-md-6 ">
+                            <div class="col-xs-6 ">
                                 Location: [{{slide.location}}]
                             </div>
-                            <div class="col-xs-12 col-md-6">
+                            <div class="col-xs-6">
                                 Size: [{{slide.size}}] sqft
                             </div>
                         </div>
@@ -134,8 +134,8 @@
   				id: 5,
   				image: "https://jbeach.xyz/hf-challenge/assets/img/carousel-images/c5.jpeg",
   				moreInfo: 0,
-  				name: "Another office",
-  				availability: "Postponed",
+  				name: "Together",
+  				availability: "N/A",
   				location: "Notting Hil",
   				size: "6,100",
   				description: "This is a description. Testing"
@@ -314,7 +314,7 @@ _______________________________________________________________________*/
 	width: 100%;
 	margin: 0 auto;
 	position: relative;
-    //For the carousel, I'm using HTML's <figure> element with <figcaption> for the office information. This keeps it semantic too, along with the <details> element.
+	//For the carousel, I'm using HTML's <figure> element with <figcaption> for the office information. This keeps it semantic too, along with the <details> element.
 	figure {
 		margin: 0;
 		img {
@@ -334,13 +334,20 @@ _______________________________________________________________________*/
 			margin-left: 0;
 			> div {
 				padding: 0.7em 0;
+					
 			}
 			//Bottom Border effect on the Carousel details
 			> div:not(.col-md-offset-6) {
 				border-bottom: solid 1px var(--font-color);
+
+                &:first-child {
+						//Line gap between columns
+						flex-basis: 49%;
+						margin-right: 1%;
+					}
 			}
 
-            //Create a psuedo element which acts as a line at the bottom, so that it can be animated with the opening of the <details> element
+			//Create a psuedo element which acts as a line at the bottom, so that it can be animated with the opening of the <details> element
 			&:last-child:before {
 				background: #736457;
 				content: "";
@@ -352,12 +359,12 @@ _______________________________________________________________________*/
 			}
 		}
 
-        //Use custom styles if this carousel item doesn't have additional information
+		//Use custom styles if this carousel item doesn't have additional information
 		&.no-info {
 			.row {
-				> div.col-md-6, &:last-child {
-					// border-bottom:unset;
-				}
+                >div{
+                    border-bottom: unset !important;
+                }
 				&:last-child:before {
 					background: var(--font-color);
 					content: "";
@@ -378,29 +385,28 @@ _______________________________________________________________________*/
 		}
 	}
 
-
-    // "READ MORE" Buttons, using HTML <details> 
+	// "READ MORE" Buttons, using HTML <details>
 	//Toggle visibility of info on the carousel when opened.
 	details {
 		position: relative;
 		border-bottom: solid 1px var(--font-color);
 		top: -1px;
-        height: var(--collapsed);
-        // transition: height 300ms cubic-bezier(0.4, 0.01, 0.165, 0.99);
-        transition: height 600ms cubic-bezier(.345,.115,.135,1.42);
-        // transform 500ms cubic-bezier(.345,.115,.135,1.42),opacity 150ms ease-out,border-color 200ms ease-out
-        .row{
-            opacity:0;
-        }
-        //Container for the Read More/Hide Text buttons
+		height: var(--collapsed);
+		// transition: height 300ms cubic-bezier(0.4, 0.01, 0.165, 0.99);
+		transition: height 600ms cubic-bezier(0.345, 0.115, 0.135, 1.42);
+		// transform 500ms cubic-bezier(.345,.115,.135,1.42),opacity 150ms ease-out,border-color 200ms ease-out
+		.row {
+			opacity: 0;
+		}
+		//Container for the Read More/Hide Text buttons
 		summary {
 			display: block;
 			cursor: pointer;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            border: unset;
-            bottom: -1.3em;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			border: unset;
+			bottom: -1.3em;
 			div.button {
 				&:before {
 					display: none;
@@ -415,22 +421,22 @@ _______________________________________________________________________*/
 		.open {
 		}
 
-        //The <details> element is toggled open
-        &[open] {
-            height: var(--expanded);
-            div.row {
-                > div {
-                }
-            }
+		//The <details> element is toggled open
+		&[open] {
+			height: var(--expanded);
+			div.row {
+				> div {
+				}
+			}
 
-            //toggle the Read More/Hide Text buttons
-            .open {
-                display: none;
-            }
-            .close {
-                display: block;
-            }
-        }
+			//toggle the Read More/Hide Text buttons
+			.open {
+				display: none;
+			}
+			.close {
+				display: block;
+			}
+		}
 	}
 }
 
@@ -450,7 +456,7 @@ summary::-webkit-details-marker {
 .swiper-button-next,
 .swiper-button-prev {
 	color: var(--background-color);
-} 
+}
 
 // custom cursor, only visible when hovering over carousel.
 #cursor-swiper {
@@ -468,6 +474,7 @@ summary::-webkit-details-marker {
 
 //____ End global styles   //__________________________________________
 
+
 /* Mobile only
 --------------------------------------------------------------------- */
 @media (max-width: $mobile-breakpoint) {
@@ -484,14 +491,27 @@ summary::-webkit-details-marker {
 		font-size: 0.4em;
 	}
 
-
-
 	.carousel {
+
+        figcaption{
+            div.row{
+                //Bottom Border effect on the Carousel details
+			    > div:not(.col-md-offset-6) {
+                    // white-space: nowrap;
+				    border-bottom: solid 1px var(--font-color);
+                    &:first-child {
+						//Line gap between columns
+						flex-basis: 48%;
+						margin-right: 2%;
+					}
+			    }
+            }
+        }
 		details[open] {
 			// padding-bottom: 1.1em;
-            p{
-                margin: 0;
-            }
+			p {
+				margin: 0;
+			}
 		}
 
 		figcaption.no-info {
@@ -502,12 +522,12 @@ summary::-webkit-details-marker {
 				}
 			}
 		}
-        details summary{
-            bottom: -1.5em;
-        }
+		details summary {
+			bottom: -1.8em;
+		}
 	}
 }
-//____ End mobile   //________________________
+//____ End mobile   //_______________________________________________
 
 
 /* Large screens (desktop, tablet landscape)
@@ -542,13 +562,9 @@ summary::-webkit-details-marker {
 		figcaption {
 			div.row {
 				> div {
-					// padding: 0.5em 0;
-					&:first-child {
-						//Line gap between columns
-						flex-basis: 49.5%;
-						margin-right: 0.5%;
-					}
+					
 				}
+                
 			}
 			&.no-info {
 				.row {

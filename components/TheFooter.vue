@@ -53,7 +53,7 @@ created() {
     })
     .to('footer#site-footer', {
         yPercent: 0,
-        duration: 0.4
+        duration: 0.6
     });
 
   },
@@ -66,43 +66,45 @@ created() {
 
 
 <style lang="scss">;
-
-
 /* General footer styles
 --------------------------------------------------------------------- */
 footer#site-footer {
-	padding: 1em var(--site-padding) 1em var(--site-padding);
+	padding: 1em var(--site-padding) 1.8em var(--site-padding);
 	position: fixed;
 	bottom: 0;
 	left: 0;
 	width: 100%;
 	width: calc(100vw - var(--site-padding));
 	transform: translateY(100%);
-
-    nav ul {
-        display: flex;
-        justify-content: space-around;
-        a{
-            display:block;
-        }
+    a{
+        display: inline-block;
     }
+
+	nav ul {
+		display: flex;
+		justify-content: space-around;
+		a {
+			// display: block;
+		}
+	}
 }
 
-//____ End general styles   //________________________
+//____ End general styles   //________________________________________
 
 
 /* Small to tablet sizes
 --------------------------------------------------------------------- */
 @media (max-width: $tablet-breakpoint) {
 	footer#site-footer {
-		// padding: 1em 0 1em 0;
+        padding-bottom: 2.3em;
 		.logo {
 			max-width: 120px;
 			opacity: 0.6;
-			margin-bottom: 1.4em;
+			margin-bottom: 0.5em;
 		}
 		nav.col-xs-12 {
 			padding: 0;
+            margin-top: 0.8em;
 			ul {
 				justify-content: flex-start;
 
@@ -114,7 +116,9 @@ footer#site-footer {
 	}
 }
 
-// A few tweaks specific for tablets
+
+/* A few tweaks specific for tablets
+--------------------------------------------------------------------- */
 @media (max-width: $tablet-breakpoint) and (min-width: $mobile-breakpoint) {
 	footer#site-footer {
 		img {
@@ -135,8 +139,8 @@ footer#site-footer {
 		}
 	}
 }
-//____ End mobile styles   //________________________
 
+//____ End mobile styles   //_________________________________________
 
 /* Medium and up
 --------------------------------------------------------------------- */
@@ -151,5 +155,6 @@ footer#site-footer {
 		}
 	}
 }
+
 
 </style>

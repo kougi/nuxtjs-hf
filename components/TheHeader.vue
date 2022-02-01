@@ -45,11 +45,10 @@ header#site-header {
 	top: 0;
 	left: 0;
 	width: 100%;
-	// Use a variable for the header's height as we can then tie it to media queries
+	// Use a variable for the header's height as we can then tie it to media queries or access it via javascript
 	height: var(--header-height);
 	background: var(--background-color);
 }
-
 
 // Logo
 .logo-container {
@@ -58,17 +57,16 @@ header#site-header {
 	top: 5px;
 	transform-origin: left;
 	// To prevent logo jankiness on initial load
-	// transform: scale(3) translatey(100vh);
-	// opacity:0;
+	transform: scale(3) translatey(90vh);
+	opacity: 0;
 
 	img {
 		opacity: 0;
 		max-width: 80px;
 		animation: fadeIn 3s;
 		animation-delay: 300ms;
-        animation-fill-mode: forwards;
+		animation-fill-mode: forwards;
 		transition-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53);
-		
 	}
 }
 
@@ -78,7 +76,6 @@ header#site-header {
 /* Mobile only
 --------------------------------------------------------------------- */
 @media (max-width: $mobile-breakpoint) {
-
 }
 
 //____ End mobile styles   //________________________
@@ -106,6 +103,7 @@ header#site-header {
 		padding-right: 1em;
 	}
 }
+
 
 
 </style>
