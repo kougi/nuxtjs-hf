@@ -168,6 +168,7 @@
   	mounted() {
   		//Open a <details> on page load  so that it adds the correct height to the page with GSAP's smooth scroll 
   		// document.body.querySelectorAll('details').forEach((e) => (e.hasAttribute('open')) ? e.removeAttribute('open') : e.setAttribute('open',false))
+
   		//Make custom cursor when hovering over carousel.
   		https: //codepen.io/GreenSock/pen/WNNNBpo
   			gsap.set("#cursor-swiper", {
@@ -202,6 +203,7 @@
   			xSet(pos.x);
   			ySet(pos.y);
   		}
+
   		// Hide/show custom cursor when hovering over carousel
   		var swiperContainer = document.querySelector(".swiper");
   		swiperContainer.onmouseenter = function() {
@@ -218,6 +220,7 @@
   				opacity: 0
   			})
   		}
+
   		// Test whether the cursor should be set to Next or Previous depending on side being hovered.
   		let prevButton = document.querySelector('.swiper-button-prev');
   		let nextButton = document.querySelector('.swiper-button-next');
@@ -297,7 +300,7 @@
   			// console.log("<detail> height refreshed")
   		}
 
-  		/* Run it */
+  		/* Get height of <detail> elements*/
   		setDetailsHeight('details');
   	}, //mounted
   };

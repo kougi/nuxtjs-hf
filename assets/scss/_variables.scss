@@ -19,6 +19,7 @@
 		// --header-height: 60px;
 	}
 }
+
 // Tall phones
 //The given font sizes don't work too well on my personal phone, so if a phone is tall/thin, I'm reducing the font sizes slightly to avoid line breaks.
 @media (max-width: $thin-tall-mobile-breakpoint) {
@@ -39,15 +40,14 @@
   
 //     }
 //   }
-
 //     @media screen 
 //   and (device-width: 320px) 
 //   and (device-height: 640px) 
 //   and (-webkit-device-pixel-ratio: 3) 
 //   and (orientation: landscape) {
-
-
 // }
+
+  // Tablet landscape
 @media only screen and (min-width: 851px) and (orientation: landscape){
   :root {
     // --header-height: 60px;
@@ -57,12 +57,7 @@
   }
 }
 
-  
-  // Tablet landscape
-    @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {}
-  
  
-    
   
 
 /* CSS variables for medium and up screens
@@ -107,7 +102,7 @@
 	outline: 1px dashed var(--font-color);
 }
 
-/* Focusing the button with a mouse, touch, or stylus will show a subtle drop shadow. */
+/* Focusing the button with a mouse, touch, or stylus will not show any outlines. */
 :focus:not(:focus-visible) {
 	outline: none;
 }
@@ -118,7 +113,7 @@
 	// border-radius:10px;
 }
 
-/* Track */
+//Scrollbar track 
 ::-webkit-scrollbar-track {
 	// background: #f1f1f1;
 	// background: #528095;
@@ -126,7 +121,7 @@
 	// border-radius:10px;
 }
 
-/* Handle */
+//Scrollbar handle 
 ::-webkit-scrollbar-thumb {
 	// background: #888;
 	// background: #f9c985;
@@ -135,11 +130,13 @@
 	// outline: 1px solid slategrey;
 }
 
-/* Handle on hover */
+//Scrollbar handle on hover 
 ::-webkit-scrollbar-thumb:hover {
 	// background: #555;
 	background: #5f4939;
 }
+
+//Scrollbar handle when pressed 
 ::-webkit-scrollbar-thumb:active {
 	background: #ac8262;
 	// border-left:solid 2px #4a321f;;
@@ -152,7 +149,7 @@
 	background: var(--font-color);
 }
 
-/* Change Autocomplete styles in Chrome*/
+/* Change Autocomplete styles in Chrome (otherwise the defaults clash too much with the theme)*/
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,

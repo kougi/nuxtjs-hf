@@ -79,10 +79,6 @@
 export default {
   name: 'NewsletterSubscribe',
 
-//   components: {
-//       SubscriptionModal,
-//     },
-
     data() {
         return {
             // showModal: false,
@@ -106,7 +102,7 @@ export default {
 		})
 	}
 
-	//Dynamic Form Label
+	//Dynamic Form Label for showing green underline when text is entered into a text field.
 	const input = document.querySelectorAll('.form-row input');
 
 	input.forEach(function(el) {
@@ -124,7 +120,7 @@ export default {
  methods: {
     //Check if all fields of the form have been filled out, if they have, show a modal window with a confirmation
     checkForm(){
-        //Are fields filled out?
+        //Are fields valid?
         if (this.fullName && this.emailAddress) {
             console.log("form submitted successfully")
             // Show the modal
@@ -136,7 +132,6 @@ export default {
 			document.querySelector("#fname").classList.remove("required");
 			// document.querySelector("#fname").classList.add("valid");
 			document.querySelector("#email").classList.remove("required");
-			document.querySelector("#email").classList.add("valid");
             return true;
         }
 
@@ -162,7 +157,7 @@ export default {
         // e.preventDefault();
     },
 
-		//Functions for showing/hiding the form submit modal.
+		//Functions for showing/hiding the confirmation modal on form submission.
 		showModal() {
 			this.isModalVisible = true;
 			console.log('show modal')
@@ -179,8 +174,6 @@ export default {
 
 
 <style lang="scss">;
-
-
 
 /* Global newsletter subscribtion form styles
 --------------------------------------------------------------------- */
@@ -221,11 +214,6 @@ section.newsletter {
 			padding: 0;
 			opacity: 0.7;
 			margin: -23px 0 0 0;
-			// border-bottom: solid 1px transparent;
-
-			// outline: 1px dashed transparent;
-			// outline-offset: 10px;
-
 			text-decoration: underline 3px rgba(255, 255, 255, 0);
 			transition: text-decoration-color 500ms cubic-bezier(0.104, 0.204, 0.492, 1),
 				opacity 300ms ease-out;
@@ -319,7 +307,6 @@ input[type="submit"] {
 		h3 {
 			margin-left: -3px;
 			margin-bottom: 0;
-			// font-size: 50px;
 		}
 		form input:not([type="submit"]) {
 			margin-top: 0px;
@@ -358,7 +345,6 @@ input[type="submit"] {
 		}
 		form input:not([type="submit"]),
 		h3 {
-			// text-indent: -5px;
 			margin-left: -11px;
 		}
 	}

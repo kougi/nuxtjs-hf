@@ -70,7 +70,7 @@ header#site-header {
 	}
 }
 
-//____ End general styles   //________________________
+//____ End general header styles   //________________________
 
 
 /* Mobile only

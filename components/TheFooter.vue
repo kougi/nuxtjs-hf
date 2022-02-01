@@ -66,6 +66,7 @@ created() {
 
 
 <style lang="scss">;
+
 /* General footer styles
 --------------------------------------------------------------------- */
 footer#site-footer {
@@ -90,6 +91,8 @@ footer#site-footer {
 }
 
 //____ End general styles   //________________________________________
+
+
 
 
 /* Small to tablet sizes
@@ -117,6 +120,7 @@ footer#site-footer {
 }
 
 
+
 /* A few tweaks specific for tablets
 --------------------------------------------------------------------- */
 @media (max-width: $tablet-breakpoint) and (min-width: $mobile-breakpoint) {
@@ -141,6 +145,7 @@ footer#site-footer {
 }
 
 //____ End mobile styles   //_________________________________________
+
 
 /* Medium and up
 --------------------------------------------------------------------- */
